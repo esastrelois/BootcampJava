@@ -2,3 +2,4 @@
 
 ## Secciones
 
+detalles
