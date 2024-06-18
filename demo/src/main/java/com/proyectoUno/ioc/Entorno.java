@@ -2,6 +2,6 @@ package com.proyectoUno.ioc;
 
 public interface Entorno {
 
-	void write(String cadena);
-
+	void write(String cad);
+	int getContador();
 }

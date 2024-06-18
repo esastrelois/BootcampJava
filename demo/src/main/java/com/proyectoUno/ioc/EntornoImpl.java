@@ -1,5 +1,6 @@
 package com.proyectoUno.ioc;
 
+//@Service
 public class EntornoImpl implements Entorno {
 	private int contador;
 	
@@ -16,7 +17,5 @@ public class EntornoImpl implements Entorno {
 	public int getContador() {
 		return contador;
 	}
-
-
 	
 }
