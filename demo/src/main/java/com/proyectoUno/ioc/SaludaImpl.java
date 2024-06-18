@@ -1,6 +1,10 @@
 package com.proyectoUno.ioc;
 
-//@Component
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+@Component("saludaEs")
+@Scope("prototype")
 public class SaludaImpl implements Saluda {
 	Entorno entorno;
 	
