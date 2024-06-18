@@ -4,14 +4,14 @@ package com.proyectoUno.ioc;
 public class EntornoImpl implements Entorno {
 	private int contador;
 	
-	public EntornoImpl(int contador) {
-		this.contador = contador;
+	public EntornoImpl(int contInit) {
+		this.contador = contInit;
 	}
 
 	@Override
-	public void write(String cadena) {
+	public void write(String cad) {
 		contador++;
-		System.out.println(cadena);
+		System.out.println(cad);
 	}
 
 	public int getContador() {

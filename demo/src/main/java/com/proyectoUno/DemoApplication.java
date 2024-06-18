@@ -6,35 +6,42 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.proyectoUno.ioc.Entorno;
+import com.proyectoUno.ioc.Rango;
 import com.proyectoUno.ioc.Saluda;
-import com.proyectoUno.ioc.SaludaEnImpl;
 
 @SpringBootApplication
 public class DemoApplication implements CommandLineRunner{
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
 	}
 
 	@Autowired
-	Saluda saludaEs;
+//	@Qualifier("es")
+	Saluda saluda;
 	@Autowired
-	Saluda saludaEn;
+//	@Qualifier("en")
+	Saluda saluda2;
 	@Autowired
 	Entorno entorno;
-	
-//	@Autowired(required = false) //Si puede lo inyecta, y si no no protesta
+	@Autowired
+	private Rango rango;
+
+//	@Autowired(required = false)
 //	SaludaEnImpl kk;
 	
 	@Override
 	public void run(String... args) throws Exception {
 		System.err.println("Aplicación arrancada...");
 //		var saluda = new Saluda();
-		System.out.println(saludaEs.getContador());
-		saludaEs.saluda("Mundo");
-		saludaEn.saluda("Mundo");
-		System.out.println(saludaEs.getContador());
-		System.out.println(saludaEn.getContador());
+		System.out.println(saluda.getContador());
+		saluda.saluda("Mundo");
+//		saluda.saluda(null);
+		saluda2.saluda("Mundo");
+		System.out.println(saluda.getContador());
+		System.out.println(saluda2.getContador());
 		System.out.println(entorno.getContador());
+		System.out.println(rango.getMin() + " -> " + rango.getMax());
 	}
 }
