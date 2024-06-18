@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 @Profile("es")
 public class SaludaImpl implements Saluda {
 	//Clase estática para el evento
+	/*
 	public static class SaludaEvento {
 		private String tipo;
 		private String destinatario;
@@ -29,8 +30,9 @@ public class SaludaImpl implements Saluda {
 			return destinatario;
 		}
 	}
+	*/
 	
-	//Record para el evento
+	//Record para el evento --> con esta linea se sustituye todo lo anterior, ya no hace falta
 	public static record saludaEvent(String tipo, String destinatario) { }
 	
 	private ApplicationEventPublisher publisher;
