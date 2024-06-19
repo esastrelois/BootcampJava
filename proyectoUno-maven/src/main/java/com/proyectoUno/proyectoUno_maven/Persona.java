@@ -9,9 +9,8 @@ public class Persona {
 	
 	
 	public Persona(int id, String nombre) {
-		super();
 		this.id = id;
-		this.nombre = nombre;
+		setNombre(nombre);
 	}
 	public Persona(int id, String nombre, String apellidos) {
 		this.id = id;
@@ -30,7 +29,7 @@ public class Persona {
 		return nombre;
 	}
 	public void setNombre(String valor) {
-		if(valor == null)
+		if(valor == null || "".equals(valor.trim()))
 			throw new IllegalArgumentException("Falta el nombre");
 		this.nombre = valor;
 	}

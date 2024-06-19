@@ -11,6 +11,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 @DisplayName("Pruebas de la clase Calculadora")
 class CalculadoraTest {
@@ -47,6 +49,14 @@ class CalculadoraTest {
 			@RepeatedTest(value = 5, name = "{displayName} {currentRepetition}/{totalRepetitions}") //Hace que se repita el test tantas veces como se indique en el value
 			void testAdd() {	
 				assertEquals(3, calculadora.add(1, 2));
+			}
+			
+			//Con la parametrizada podemos ejecutarlo a la vez en diferentes casos
+			@ParameterizedTest(name = "Caso {index}: {0} + {1} = {2}")
+			@DisplayName("Suma dos enteros")
+			@CsvSource(value = {"1,2,3","3,-1,2","-1,2,1","-2,-3,-5","0,1,1","0.1,0.2,0.3"}) //value= {Operando 1, operando 2, resultado}
+			void testAdd(double operando1, double operando2, double resultado) {	
+				assertEquals(resultado, calculadora.add(operando1, operando2));
 			}
 			
 			@Test
