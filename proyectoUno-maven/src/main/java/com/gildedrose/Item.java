@@ -4,10 +4,8 @@ public class Item {
 
     public String name;
 
-    //Días que tenemos para venderlo
     public int sellIn;
 
-    //Calidad del artículo
     public int quality;
 
     public Item(String name, int sellIn, int quality) {
