@@ -19,7 +19,7 @@ class GildedRose {
                     }
                 }
             } 
-             //El "Queso Brie envejecido" (Aged brie) incrementa su calidad a medida que se pone viejo
+             //El "Queso Brie envejecido" (Aged brie) y las entradas Backstage incrementan su calidad a medida que pasan los días
              //Su calidad aumenta en 1 unidad cada día
              else {
                 if (items[i].quality < 50) {
