@@ -12,3 +12,4 @@
     * Test básicos, test parametrizados (@ParameterizedTest) y varios casos en un mismo test (@CsvSource).
     * Organización de test (@Nested, @DiplayName)
     * Creación de etiquetas para ejecutar test específicos (@Tag)
+    * Ordenación de test (@TestMethodOrder)
