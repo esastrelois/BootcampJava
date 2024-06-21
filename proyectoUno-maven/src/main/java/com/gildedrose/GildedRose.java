@@ -18,7 +18,7 @@ class GildedRose {
                         items[i].quality = items[i].quality - 1;
                     }
                 }
-            } 
+            }
              //El "Queso Brie envejecido" (Aged brie) y las entradas Backstage incrementan su calidad a medida que pasan los días
              //Su calidad aumenta en 1 unidad cada día
              else {
@@ -49,7 +49,8 @@ class GildedRose {
             }
 
             //Una vez que ha pasado la fecha recomendada de venta, la calidad se degrada al doble de velocidad
-            if (items[i].sellIn < 0) {
+            //Los artículos conjurados degradan su calidad al doble de velocidad que los normales
+            if (items[i].sellIn < 0 || items[i].name.contains("Conjurado")) {
             	//El resto de productos que no son queso brie envejecido ni entradas Backstage
                 if (!items[i].name.equals("Aged Brie")) {
                     if (!items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {

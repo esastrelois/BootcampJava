@@ -104,6 +104,26 @@ class GildedRoseTest {
                 assertEquals(sellInOut, gildedRose.items[0].sellIn);
                 assertEquals(qualityOut, gildedRose.items[0].quality);
 		    }
+			
+			/* 
+			El "Queso Brie envejecido" (Aged brie) incrementa su calidad a medida que se pone viejo
+			Su calidad aumenta en 1 unidad cada día --> Caso 1
+			luego de la fecha de venta su calidad aumenta 2 unidades por día --> Caso 2
+			La calidad nunca debe pasar de 50 --> Caso 3
+			*/
+			@DisplayName("Acualizar calidad Conjurados")
+			@ParameterizedTest(name = "Caso {index}: name {0}, sellIn {1}, quality {2} --> updateQuality --> sellIn {3}, quality {4}")
+			@CsvSource(value = {"Conjurado,20,44,19,42",
+								"Conjurado,-1,44,-2,42",
+								"Conjurado,20,0,19,0"})
+			void test03UpdateQualityConjurados(String nombre, int sellIn, int qualityIn, int sellInOut, int qualityOut) {
+				Item item = new Item(nombre, sellIn, qualityIn);
+				gildedRose.items[0] = item;
+                gildedRose.updateQuality();
+                assertEquals("Conjurado",gildedRose.items[0].name);
+                assertEquals(sellInOut, gildedRose.items[0].sellIn);
+                assertEquals(qualityOut, gildedRose.items[0].quality);
+		    }
 		}
 		
 		@Nested
