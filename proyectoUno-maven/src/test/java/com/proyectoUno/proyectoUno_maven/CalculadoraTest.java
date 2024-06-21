@@ -104,6 +104,21 @@ class CalculadoraTest {
 			}
 			
 		}
+		
+		/*
+		En caso de querer probar algo, independientemente de otra clase, puedo simular
+		que siempre salga lo que yo quiera para que no interfieran sus fallos en mi test actual.
+		Para eso se utiliza --> Mockito
+		*/
+		@Test
+		void simula() {
+			Calculadora calculadora = mock(Calculadora.class); //Crea una clase que tiene lo mismo que la que simula
+			when(calculadora.add(anyDouble(), anyDouble())).thenReturn(3.0).thenReturn(4.0); //Cuando te pidan esto (anyDouble()), quiero que devuelvas esto (thenReturn)
+			
+			assertEquals(3, calculadora.add(2.0,2.0));
+			assertEquals(4, calculadora.add(12.0,2.0));
+			assertEquals(4, calculadora.add(1.0,2.0));
+		}
 	}
 	
 }

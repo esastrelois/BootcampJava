@@ -77,5 +77,27 @@ class PersonaTest {
 				assertThrows(Exception.class, () -> new Persona(id, nombre));
 			}
 		}
+		
+		@Test
+		void ponMayusculasServiceOK() {
+			var persona = new Persona(1, "Pepito","Grillo"); //Persona que vamos a utilizar
+			var dao = mock(PersonaRepository.class); //Clase a simular
+			when(dao.getOne(anyInt())).thenReturn(Optional.of(persona)); //Devuelve la persona a la que pertenezca ese id
+			var srv = new PersonaService(dao);
+			
+			srv.ponMayusculas(1);
+			
+			assertEquals("PEPITO",persona.getNombre());
+			verify(dao).modify(persona); //Verifica que ha invocado a ese método con esos parámetros
+			
+		}
+		
+		@Test
+		void ponMayusculasServiceKO() {
+			var dao = mock(PersonaRepository.class); 
+			when(dao.getOne(anyInt())).thenReturn(Optional.empty()); //Devuelve un Optional.empty() siempre
+			var srv = new PersonaService(dao);
+			assertThrows(IllegalArgumentException.class, () -> srv.ponMayusculas(1));
+		}
 	}
 }
