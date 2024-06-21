@@ -13,6 +13,8 @@
     * Organización de test (@Nested, @DiplayName)
     * Creación de etiquetas para ejecutar test específicos (@Tag)
     * Ordenación de test (@TestMethodOrder)
+    * Test introducción a Mockito (obligar a que devuelva lo indicado, por si se necesitase realizar otras pruebas posteriores)
   * GildedRose
     * Testing 
     * Refactorización del código
+    * Test introducción a Mockito (evitando equivocaciones por acceso a BBDD desde el DAO)
