@@ -23,4 +23,22 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  
+  <build>
+  	<plugins>
+  		<plugin>
+  			<!-- Plugin para comprobar la cobertura de código en las pruebas -->
+			<groupId>org.pitest</groupId>
+			<artifactId>pitest-maven</artifactId>
+			<version>1.15.3</version>
+			<dependencies>
+				<dependency>
+					<groupId>org.pitest</groupId>
+					<artifactId>pitest-junit5-plugin</artifactId>
+					<version>1.2.1</version>
+				</dependency>
+			</dependencies>
+		</plugin>
+  	</plugins>
+  </build>
 </project>

@@ -96,7 +96,7 @@ class GildedRoseTest {
 			@CsvSource(value = {"Aged Brie,20,44,19,45",
 								"Aged Brie,-1,44,-2,46",
 								"Aged Brie,20,50,19,50"})
-			void test03UpdateQualityQuesoBrie(String nombre, int sellIn, int qualityIn, int sellInOut, int qualityOut) {
+			void test04UpdateQualityQuesoBrie(String nombre, int sellIn, int qualityIn, int sellInOut, int qualityOut) {
 				Item item = new Item(nombre, sellIn, qualityIn);
 				gildedRose.items[0] = item;
                 gildedRose.updateQuality();
@@ -106,17 +106,14 @@ class GildedRoseTest {
 		    }
 			
 			/* 
-			El "Queso Brie envejecido" (Aged brie) incrementa su calidad a medida que se pone viejo
-			Su calidad aumenta en 1 unidad cada día --> Caso 1
-			luego de la fecha de venta su calidad aumenta 2 unidades por día --> Caso 2
-			La calidad nunca debe pasar de 50 --> Caso 3
+			Los artículos conjurados degradan su calidad al doble de velocidad que los normales
 			*/
 			@DisplayName("Acualizar calidad Conjurados")
 			@ParameterizedTest(name = "Caso {index}: name {0}, sellIn {1}, quality {2} --> updateQuality --> sellIn {3}, quality {4}")
 			@CsvSource(value = {"Conjurado,20,44,19,42",
 								"Conjurado,-1,44,-2,42",
 								"Conjurado,20,0,19,0"})
-			void test03UpdateQualityConjurados(String nombre, int sellIn, int qualityIn, int sellInOut, int qualityOut) {
+			void test05UpdateQualityConjurados(String nombre, int sellIn, int qualityIn, int sellInOut, int qualityOut) {
 				Item item = new Item(nombre, sellIn, qualityIn);
 				gildedRose.items[0] = item;
                 gildedRose.updateQuality();
@@ -128,7 +125,20 @@ class GildedRoseTest {
 		
 		@Nested
 		class KO{
-			
+			@DisplayName("Acualizar calidad productos con calidad negativa")
+			@ParameterizedTest(name = "Caso {index}: name {0}, sellIn {1}, quality {2} --> updateQuality --> sellIn {3}, quality {4}")
+			@CsvSource(value = {"Jamon,20,-5,19,-5",
+								"Conjurado,20,-5,19,-5",
+								"Aged Brie,20,-5,19,-4",
+								"Backstage passes to a TAFKAL80ETC concert,20,-5,19,-4",
+								"'Sulfuras, Hand of Ragnaros',20,-5,20,-5"})
+			void test01KOUpdateQualityProductosGenerales(String nombre, int sellIn, int qualityIn, int sellInOut, int qualityOut) {
+				Item item = new Item(nombre, sellIn, qualityIn);
+				gildedRose.items[0] = item;
+                gildedRose.updateQuality();
+                assertEquals(sellInOut, gildedRose.items[0].sellIn);
+                assertEquals(qualityOut, gildedRose.items[0].quality);
+			}
 		}
 	}
 
