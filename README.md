@@ -13,3 +13,6 @@
     * Organización de test (@Nested, @DiplayName)
     * Creación de etiquetas para ejecutar test específicos (@Tag)
     * Ordenación de test (@TestMethodOrder)
+  * GildedRose
+    * Testing 
+    * Refactorización del código

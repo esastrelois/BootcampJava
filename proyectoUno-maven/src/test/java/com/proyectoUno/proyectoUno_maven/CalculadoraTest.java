@@ -2,6 +2,9 @@ package com.proyectoUno.proyectoUno_maven;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyDouble;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -99,6 +102,7 @@ class CalculadoraTest {
 			void testDivRealKO() {
 				assertThrows(ArithmeticException.class, () -> calculadora.div(3.0, 0));
 			}
+			
 		}
 	}
 	
