@@ -4,11 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import com.proyectoUno.domains.contracts.repositories.ActorRepository;
-import com.proyectoUno.domains.entities.Actor;
+
+import jakarta.transaction.Transactional;
 
 @SpringBootApplication
 public class DemoApplication implements CommandLineRunner{
@@ -22,6 +21,8 @@ public class DemoApplication implements CommandLineRunner{
 	ActorRepository dao;
 	
 	@Override
+	@Transactional //Forma 2 - para mantener la conexión abierta y que traiga toda la información de las películas siempre
+	//Si ponemos el @Transactional no es necesario el FetchType.EAGER en el atributo filmActors de Actor.java
 	public void run(String... args) throws Exception {
 		System.err.println("Aplicación arrancada...");
 //		dao.findAll().forEach(System.out::println);
@@ -43,15 +44,23 @@ public class DemoApplication implements CommandLineRunner{
 //		}
 //		dao.deleteById(201);
 //		dao.findAll().forEach(System.out::println);
-		dao.findTop5ByLastNameStartingWithOrderByFirstNameDesc("P").forEach(System.out::println);
-		dao.findTop5ByLastNameStartingWith("P", Sort.by("LastName").ascending()).forEach(System.out::println);
-		dao.findByActorIdGreaterThanEqual(200).forEach(System.out::println);
-		dao.findByJPQL(200).forEach(System.out::println);
-		dao.findBySQL(200).forEach(System.out::println);
-		//Al hacer extender ActorRepository de JpaSpecificationExecutor<Actor> se puede utilizar el builder de la siguiente manera para realizar lo mismo
-		dao.findAll((root, query, builder) -> builder.greaterThanOrEqualTo(root.get("actorId"),200)).forEach(System.out::println);
-		//Actores con id menor de 10
-		dao.findAll((root, query, builder) -> builder.lessThan(root.get("actorId"),10)).forEach(System.out::println);
+//		dao.findTop5ByLastNameStartingWithOrderByFirstNameDesc("P").forEach(System.out::println);
+//		dao.findTop5ByLastNameStartingWith("P", Sort.by("LastName").ascending()).forEach(System.out::println);
+//		dao.findByActorIdGreaterThanEqual(200).forEach(System.out::println);
+//		dao.findByJPQL(200).forEach(System.out::println);
+//		dao.findBySQL(200).forEach(System.out::println);
+//		//Al hacer extender ActorRepository de JpaSpecificationExecutor<Actor> se puede utilizar el builder de la siguiente manera para realizar lo mismo
+//		dao.findAll((root, query, builder) -> builder.greaterThanOrEqualTo(root.get("actorId"),200)).forEach(System.out::println);
+//		//Actores con id menor de 10
+//		dao.findAll((root, query, builder) -> builder.lessThan(root.get("actorId"),10)).forEach(System.out::println);
+		var item = dao.findById(1);
+		if(item.isEmpty()) {
+			System.err.println("No encontrado");
+		} else {
+			var actor = item.get();
+			System.out.println(actor);
+			actor.getFilmActors().forEach(f -> System.out.println(f.getFilm().getTitle()));
+		}
 	}
 	
 	/*

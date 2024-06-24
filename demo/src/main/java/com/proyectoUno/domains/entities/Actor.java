@@ -7,6 +7,7 @@ import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -51,7 +52,10 @@ public class Actor implements Serializable {
 	private Timestamp lastUpdate;
 
 	//bi-directional many-to-one association to FilmActor
-	@OneToMany(mappedBy="actor")
+	@OneToMany(mappedBy="actor") 
+//	@OneToMany(mappedBy="actor", fetch = FetchType.EAGER) //Forma 1 - para mantener la conexión abierta y que traiga toda la información de las películas siempre
+//	Si ponemos el fetch = FetchType.EAGER no es necesario el @Transactional en la DemoApplication.java
+// 	La otra opción sería FetchType.LAZY que sería perezosa --> por defecto se aplica esa si no ponemos nada
 	private List<FilmActor> filmActors;
 
 	public Actor() {
