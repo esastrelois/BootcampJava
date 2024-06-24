@@ -6,6 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.proyectoUno.domains.contracts.repositories.ActorRepository;
+import com.proyectoUno.domains.entities.Actor;
 
 import jakarta.transaction.Transactional;
 
@@ -32,6 +33,7 @@ public class DemoApplication implements CommandLineRunner{
 //		} else {
 //			System.out.println(item.get());
 //		}
+		
 //		var actor = new Actor(0, "Pepito", "Grillo");
 //		System.out.println(dao.save(actor));
 //		var item = dao.findById(201);
@@ -42,6 +44,8 @@ public class DemoApplication implements CommandLineRunner{
 //			actor.setFirstName(actor.getFirstName().toUpperCase());
 //			dao.save(actor);
 //		}
+		
+//		/* Prueba - Uso de metodos JPA, JPQL y SQL */		
 //		dao.deleteById(201);
 //		dao.findAll().forEach(System.out::println);
 //		dao.findTop5ByLastNameStartingWithOrderByFirstNameDesc("P").forEach(System.out::println);
@@ -53,13 +57,23 @@ public class DemoApplication implements CommandLineRunner{
 //		dao.findAll((root, query, builder) -> builder.greaterThanOrEqualTo(root.get("actorId"),200)).forEach(System.out::println);
 //		//Actores con id menor de 10
 //		dao.findAll((root, query, builder) -> builder.lessThan(root.get("actorId"),10)).forEach(System.out::println);
-		var item = dao.findById(1);
-		if(item.isEmpty()) {
-			System.err.println("No encontrado");
-		} else {
-			var actor = item.get();
-			System.out.println(actor);
-			actor.getFilmActors().forEach(f -> System.out.println(f.getFilm().getTitle()));
+//		var item = dao.findById(1);
+		
+//		/* Prueba - Carga apresurada vs carga perezosa */
+//		if(item.isEmpty()) {
+//			System.err.println("No encontrado");
+//		} else {
+//			var actor = item.get();
+//			System.out.println(actor);
+//			actor.getFilmActors().forEach(f -> System.out.println(f.getFilm().getTitle()));
+//		}
+		
+		/* Prueba - Meter datos inválidos */
+		var actor = new Actor(0, " ", null);
+		if(actor.isValid()) {
+			System.out.println(dao.save(actor));
+		}else {
+			actor.getErrors().forEach(System.out::println);
 		}
 	}
 	

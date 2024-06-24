@@ -9,6 +9,7 @@
     * Uso de perfiles (@Profile)
     * Ejemplos CRUD y Querys con JPA, JPQL y SQL. Con BBDD Sakila
     * Carga apresurada (EAGER) vs perezosa (LAZY)
+    * Validations
 * ProyectoUno-maven:
   * Calculadora y persona
     * Test básicos, test parametrizados (@ParameterizedTest) y varios casos en un mismo test (@CsvSource).

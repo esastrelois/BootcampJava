@@ -5,15 +5,20 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
 
+import com.proyectoUno.core.validations.NIF;
+import com.proyectoUno.domains.core.entities.EntityBase;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 
 /**
@@ -23,7 +28,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="actor")
 @NamedQuery(name="Actor.findAll", query="SELECT a FROM Actor a")
-public class Actor implements Serializable {
+public class Actor extends EntityBase<Actor> implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	public Actor(int actorId) {
@@ -43,9 +48,15 @@ public class Actor implements Serializable {
 	private int actorId;
 
 	@Column(name="first_name", nullable=false, length=45)
+	@NotBlank //No puede estar en blanco
+	@Size(max=45, min=2) //Tamaño máximo de 45 dígitos
+	@Pattern(regexp = "^[A-Z]+$", message = "tiene que estar en mayusculas") //Para estipular una expresión regular para validar el campo
 	private String firstName;
 
 	@Column(name="last_name", nullable=false, length=45)
+	@NotBlank
+	@Size(max=45, min=2)
+	@NIF //Utiliza nuestro propio validador NIF creado
 	private String lastName;
 
 	@Column(name="last_update", nullable=false)
