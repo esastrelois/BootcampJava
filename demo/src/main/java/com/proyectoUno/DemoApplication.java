@@ -4,8 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import com.proyectoUno.domains.contracts.repositories.ActorRepository;
+import com.proyectoUno.domains.entities.Actor;
 
 @SpringBootApplication
 public class DemoApplication implements CommandLineRunner{
@@ -30,16 +33,25 @@ public class DemoApplication implements CommandLineRunner{
 //		}
 //		var actor = new Actor(0, "Pepito", "Grillo");
 //		System.out.println(dao.save(actor));
-		var item = dao.findById(201);
-		if(item.isEmpty()) {
-			System.err.println("No encontrado");
-		} else {
-			var actor = item.get();
-			actor.setFirstName(actor.getFirstName().toUpperCase());
-			dao.save(actor);
-		}
-		dao.deleteById(201);
-		dao.findAll().forEach(System.out::println);
+//		var item = dao.findById(201);
+//		if(item.isEmpty()) {
+//			System.err.println("No encontrado");
+//		} else {
+//			var actor = item.get();
+//			actor.setFirstName(actor.getFirstName().toUpperCase());
+//			dao.save(actor);
+//		}
+//		dao.deleteById(201);
+//		dao.findAll().forEach(System.out::println);
+		dao.findTop5ByLastNameStartingWithOrderByFirstNameDesc("P").forEach(System.out::println);
+		dao.findTop5ByLastNameStartingWith("P", Sort.by("LastName").ascending()).forEach(System.out::println);
+		dao.findByActorIdGreaterThanEqual(200).forEach(System.out::println);
+		dao.findByJPQL(200).forEach(System.out::println);
+		dao.findBySQL(200).forEach(System.out::println);
+		//Al hacer extender ActorRepository de JpaSpecificationExecutor<Actor> se puede utilizar el builder de la siguiente manera para realizar lo mismo
+		dao.findAll((root, query, builder) -> builder.greaterThanOrEqualTo(root.get("actorId"),200)).forEach(System.out::println);
+		//Actores con id menor de 10
+		dao.findAll((root, query, builder) -> builder.lessThan(root.get("actorId"),10)).forEach(System.out::println);
 	}
 	
 	/*
