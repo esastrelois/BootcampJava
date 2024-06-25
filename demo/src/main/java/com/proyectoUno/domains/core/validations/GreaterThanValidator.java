@@ -1,4 +1,4 @@
-package com.proyectoUno.core.validations;
+package com.proyectoUno.domains.core.validations;
 
 import java.time.LocalDate;
 

@@ -1,4 +1,4 @@
-package com.proyectoUno.domains.contracts.services;
+package com.proyectoUno.domains.core.contracts.services;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,7 +8,7 @@ import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 
 import com.proyectoUno.exceptions.InvalidDataException;
 
-
+//Contiene las operaciones CRUD generales
 public interface DomainService<E, K> {
 	List<E> getAll();
 	

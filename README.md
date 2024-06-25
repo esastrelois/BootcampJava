@@ -3,10 +3,11 @@
 ## Secciones
 
 * Demo:
-  * Saluda, entorno y rango
+  * Saluda, entorno y rango - DemoApplication Sin capas (Con pruebas 1)
     * Funcionamiento inicial de etiquetas @Service, @Component, @Scope, @Qualifier, @ConfigurationProperties
     * Evitar nulos (@Nonnull)
     * Uso de perfiles (@Profile)
+  * Sakila (Actores y peliculas)- DemoApplication usando repositorios (Con pruebas 2) y usando servicios (Con pruebas 3)
     * Ejemplos CRUD y Querys con JPA, JPQL y SQL. Con BBDD Sakila
     * Carga apresurada (EAGER) vs perezosa (LAZY)
     * Validations

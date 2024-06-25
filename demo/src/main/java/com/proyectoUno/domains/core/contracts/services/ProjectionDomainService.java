@@ -1,4 +1,4 @@
-package com.proyectoUno.domains.contracts.services;
+package com.proyectoUno.domains.core.contracts.services;
 
 import java.util.List;
 

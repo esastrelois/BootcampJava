@@ -1,4 +1,4 @@
-package com.proyectoUno.core.validations;
+package com.proyectoUno.domains.core.validations;
 
 public final class CadenasValidator {
 	private CadenasValidator() {

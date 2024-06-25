@@ -4,16 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import com.proyectoUno.domains.contracts.repositories.ActorRepository;
+import com.proyectoUno.domains.contrats.services.ActorService;
 import com.proyectoUno.domains.entities.models.ActorDTO;
-
-import jakarta.transaction.Transactional;
 
 @SpringBootApplication
 public class DemoApplication implements CommandLineRunner{
@@ -23,6 +16,18 @@ public class DemoApplication implements CommandLineRunner{
 		SpringApplication.run(DemoApplication.class, args);
 	}
 	
+	//PRUEBAS 3 - Utilizando servicios
+	@Autowired
+	ActorService srv;
+	
+	public void run(String... args) throws Exception {
+		System.err.println("Aplicación arrancada...");
+		srv.getByProjection(ActorDTO.class).forEach(System.out::println);
+	}
+	
+	
+	/*
+	// PRUEBAS 2 - Utilizando repositorios
 	@Autowired
 	ActorRepository dao;
 	
@@ -102,19 +107,20 @@ public class DemoApplication implements CommandLineRunner{
 //		dao.findAll(PageRequest.of(3, 10, Sort.by("ActorId"))).forEach(System.out::println);
 
 		/* Serialización */
-		var serializa = new ObjectMapper(); //var serializa = new XmlMapper(); //Otra forma sería serializar en XML
-		dao.findAll(PageRequest.of(3,  10, Sort.by("ActorId")))
-			.forEach(item -> {
-				try {
-					System.out.println(serializa.writeValueAsString(item));
-				}catch (JsonProcessingException e) {
-					e.printStackTrace();
-				}
-			});
-
-	}
+//		var serializa = new ObjectMapper(); //var serializa = new XmlMapper(); //Otra forma sería serializar en XML
+//		dao.findAll(PageRequest.of(3,  10, Sort.by("ActorId")))
+//			.forEach(item -> {
+//				try {
+//					System.out.println(serializa.writeValueAsString(item));
+//				}catch (JsonProcessingException e) {
+//					e.printStackTrace();
+//				}
+//			});
+//
+//	}
 	
 	/*
+	// PRUEBAS 1 - Utilizando directamente sin capas
 	@Autowired
 //	@Qualifier("es")
 	Saluda saluda;

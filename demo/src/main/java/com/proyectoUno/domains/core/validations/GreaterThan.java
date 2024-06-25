@@ -1,4 +1,4 @@
-package com.proyectoUno.core.validations;
+package com.proyectoUno.domains.core.validations;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

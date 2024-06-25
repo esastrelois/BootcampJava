@@ -1,4 +1,4 @@
-package com.proyectoUno.domains.contracts.services;
+package com.proyectoUno.domains.core.contracts.services;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 
+//Para meter mis propias consultas
 public interface SpecificationDomainService<E, K> extends PagingAndSortingDomainService<E, K> {
 	Optional<E> getOne(Specification<E> spec);
 	List<E> getAll(Specification<E> spec);
