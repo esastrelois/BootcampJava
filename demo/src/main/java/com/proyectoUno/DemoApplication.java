@@ -4,13 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.proyectoUno.domains.contracts.repositories.ActorRepository;
-import com.proyectoUno.domains.entities.Actor;
 import com.proyectoUno.domains.entities.models.ActorDTO;
-import com.proyectoUno.domains.entities.models.ActorShort;
+import com.proyectoUno.domains.entities.models.ActorOtroDTO;
 
 import jakarta.transaction.Transactional;
 
@@ -98,7 +97,18 @@ public class DemoApplication implements CommandLineRunner{
 		
 		/* Paginación */
 		//Muestra la cuarta página (3), de 10 en 10 resultados, ordenado por ActorId
-		dao.findAll(PageRequest.of(3, 10, Sort.by("ActorId"))).forEach(System.out::println);
+//		dao.findAll(PageRequest.of(3, 10, Sort.by("ActorId"))).forEach(System.out::println);
+
+		/* Serialización */
+		var serializa = new ObjectMapper();
+		dao.findByActorIdGreaterThanEqual(200, ActorDTO.class)
+			.forEach(item -> {
+				try {
+					System.out.println(serializa.writeValueAsString(item));
+				}catch (JsonProcessingException e) {
+					e.printStackTrace();
+				}
+			});
 	}
 	
 	/*

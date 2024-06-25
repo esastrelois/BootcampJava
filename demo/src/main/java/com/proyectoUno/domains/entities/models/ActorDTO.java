@@ -2,18 +2,21 @@ package com.proyectoUno.domains.entities.models;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.proyectoUno.domains.entities.Actor;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /* Clase para la prueba de Lombok */
 @Data
 @AllArgsConstructor
 public class ActorDTO implements Serializable{
+	@JsonProperty("id")
 	private int actorId;
+	@JsonProperty("nombre")
 	private String firstName;
+	@JsonProperty("apellidos")
 	private String lastName;
 	
 	//Si tengo una entidad y necesito un DTO:

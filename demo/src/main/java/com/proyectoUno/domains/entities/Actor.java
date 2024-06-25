@@ -5,7 +5,8 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
 
-import com.proyectoUno.core.validations.NIF;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.proyectoUno.domains.core.entities.EntityBase;
 
 import jakarta.persistence.Column;
@@ -17,7 +18,6 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 
@@ -60,6 +60,7 @@ public class Actor extends EntityBase<Actor> implements Serializable {
 	private String lastName;
 
 	@Column(name="last_update", nullable=false, updatable=false, insertable=false)
+	@JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
 	private Timestamp lastUpdate;
 
 	//bi-directional many-to-one association to FilmActor
@@ -67,6 +68,9 @@ public class Actor extends EntityBase<Actor> implements Serializable {
 //	@OneToMany(mappedBy="actor", fetch = FetchType.EAGER) //Forma 1 - para mantener la conexión abierta y que traiga toda la información de las películas siempre
 //	Si ponemos el fetch = FetchType.EAGER no es necesario el @Transactional en la DemoApplication.java
 // 	La otra opción sería FetchType.LAZY que sería perezosa --> por defecto se aplica esa si no ponemos nada
+	//2 formas para que cuando serialice el actor, no serialice todas sus peliculas:
+//	@JsonIgnore //Forma 1 - Para que los ignore
+	@JsonBackReference //Forma 2 - Para que atienda al 	@JsonManagedReference de la clase FilmActor y el resultado será el mismo
 	private List<FilmActor> filmActors;
 
 	public Actor() {
