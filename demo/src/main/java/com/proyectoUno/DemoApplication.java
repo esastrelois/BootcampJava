@@ -4,12 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.proyectoUno.domains.contracts.repositories.ActorRepository;
 import com.proyectoUno.domains.entities.models.ActorDTO;
-import com.proyectoUno.domains.entities.models.ActorOtroDTO;
 
 import jakarta.transaction.Transactional;
 
@@ -100,8 +102,8 @@ public class DemoApplication implements CommandLineRunner{
 //		dao.findAll(PageRequest.of(3, 10, Sort.by("ActorId"))).forEach(System.out::println);
 
 		/* Serialización */
-		var serializa = new ObjectMapper();
-		dao.findByActorIdGreaterThanEqual(200, ActorDTO.class)
+		var serializa = new ObjectMapper(); //var serializa = new XmlMapper(); //Otra forma sería serializar en XML
+		dao.findAll(PageRequest.of(3,  10, Sort.by("ActorId")))
 			.forEach(item -> {
 				try {
 					System.out.println(serializa.writeValueAsString(item));
@@ -109,6 +111,7 @@ public class DemoApplication implements CommandLineRunner{
 					e.printStackTrace();
 				}
 			});
+
 	}
 	
 	/*

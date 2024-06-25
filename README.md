@@ -13,6 +13,7 @@
     * ObjetosDTO
     * Proyecciones
     * Paginación (PageRequest)
+    * Serialización
 * ProyectoUno-maven:
   * Calculadora y persona
     * Test básicos, test parametrizados (@ParameterizedTest) y varios casos en un mismo test (@CsvSource).
