@@ -9,7 +9,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-import com.catalogo.domains.contracts.repositories.CategoryRepository;
 import com.catalogo.domains.contracts.repositories.LanguageRepository;
 import com.catalogo.domains.contrats.services.LanguageService;
 import com.catalogo.domains.entities.Language;

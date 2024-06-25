@@ -8,4 +8,5 @@ import com.catalogo.domains.entities.Actor;
 
 public interface ActorRepository extends JpaRepository<Actor, Integer>, JpaSpecificationExecutor<Actor>,
 	RepositoryWithProjections{
+	
 }
