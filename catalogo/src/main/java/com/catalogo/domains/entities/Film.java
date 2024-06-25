@@ -17,6 +17,18 @@ import java.util.List;
 public class Film implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	public Film(int filmId) {
+		super();
+		this.filmId = filmId;
+	}
+	
+	public Film(int filmId, String description, Short releaseYear) {
+		super();
+		this.filmId=filmId;
+		this.description=description;
+		this.releaseYear=releaseYear;
+	}
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="film_id", unique=true, nullable=false)
