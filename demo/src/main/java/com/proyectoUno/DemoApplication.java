@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 import com.proyectoUno.domains.contracts.repositories.ActorRepository;
 import com.proyectoUno.domains.entities.Actor;
@@ -83,15 +85,20 @@ public class DemoApplication implements CommandLineRunner{
 //		var actor = new ActorDTO(0, "FROM", "DTO");
 //		dao.save(ActorDTO.from(actor));
 //		dao.findAll().forEach(item -> System.out.println(ActorDTO.from(item)));
-		System.out.println("Sin proyeccion");
-		dao.readByActorIdGreaterThanEqual(200).forEach(System.out::println);
-		dao.queryByActorIdGreaterThanEqual(200).forEach(item -> System.out.println(item.getId()+" "+item.getNombre()));
+//		System.out.println("Sin proyeccion");
+//		dao.readByActorIdGreaterThanEqual(200).forEach(System.out::println);
+//		dao.queryByActorIdGreaterThanEqual(200).forEach(item -> System.out.println(item.getId()+" "+item.getNombre()));
+//		
+//		/* Con proyeccion - permite usar el mismo metodo y pasarle el tipo de objeto diferente en cada caso */
+//		System.out.println("Con proyeccion DTO");
+//		dao.findByActorIdGreaterThanEqual(200, ActorDTO.class).forEach(System.out::println);
+//		System.out.println("Con proyeccion Short");
+//		dao.findByActorIdGreaterThanEqual(200, ActorShort.class).forEach(item -> System.out.println(item.getId()+" "+item.getNombre()));
+//	
 		
-		/* Con proyeccion - permite usar el mismo metodo y pasarle el tipo de objeto diferente en cada caso */
-		System.out.println("Con proyeccion DTO");
-		dao.findByActorIdGreaterThanEqual(200, ActorDTO.class).forEach(System.out::println);
-		System.out.println("Con proyeccion Short");
-		dao.findByActorIdGreaterThanEqual(200, ActorShort.class).forEach(item -> System.out.println(item.getId()+" "+item.getNombre()));
+		/* Paginación */
+		//Muestra la cuarta página (3), de 10 en 10 resultados, ordenado por ActorId
+		dao.findAll(PageRequest.of(3, 10, Sort.by("ActorId"))).forEach(System.out::println);
 	}
 	
 	/*
