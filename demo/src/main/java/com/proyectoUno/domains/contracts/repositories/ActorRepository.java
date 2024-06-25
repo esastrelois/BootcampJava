@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 
 import com.proyectoUno.domains.entities.Actor;
+import com.proyectoUno.domains.entities.models.ActorDTO;
+import com.proyectoUno.domains.entities.models.ActorShort;
 
 public interface ActorRepository extends JpaRepository<Actor, Integer>, JpaSpecificationExecutor<Actor>{
 	//Top 5 ordenados por nombre, orden descendiente
@@ -23,4 +25,14 @@ public interface ActorRepository extends JpaRepository<Actor, Integer>, JpaSpeci
 	List<Actor> findByJPQL(int actorId);
 	@Query(value = "SELECT * FROM actor WHERE actor_id >= ?1", nativeQuery = true) //nativeQuery=true para que sepa que la tiene que mandar tal cual a la BBDD
 	List<Actor> findBySQL(int id);
+	
+	//Podemos hacer el método findByActorIdGreaterThanEqual para los objetos ActorDTO y ActorShort
+	List<ActorDTO> readByActorIdGreaterThanEqual(int actorId); //"read" hace lo mismo que "find"
+	List<ActorShort> queryByActorIdGreaterThanEqual(int actorId); //"query" hace lo mismo que "read" y "find"
+	
+	/* Con proyecciones */
+	//Pero como tenemos que cambiar los sinónimos por cada método para que no se llamen igual, creamos uno de forma genérica --> usando Proyecciones
+	<T> List<T> findByActorIdGreaterThanEqual(int actorId, Class<T> proyeccion);
+	
+	
 }

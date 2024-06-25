@@ -7,6 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.proyectoUno.domains.contracts.repositories.ActorRepository;
 import com.proyectoUno.domains.entities.Actor;
+import com.proyectoUno.domains.entities.models.ActorDTO;
+import com.proyectoUno.domains.entities.models.ActorShort;
 
 import jakarta.transaction.Transactional;
 
@@ -69,12 +71,27 @@ public class DemoApplication implements CommandLineRunner{
 //		}
 		
 		/* Prueba - Meter datos inválidos */
-		var actor = new Actor(0, " ", null);
-		if(actor.isValid()) {
-			System.out.println(dao.save(actor));
-		}else {
-			actor.getErrors().forEach(System.out::println);
-		}
+//		var actor = new Actor(0, " ", null);
+//		if(actor.isValid()) {
+//			System.out.println(dao.save(actor));
+//		}else {
+//			actor.getErrors().forEach(System.out::println);
+//		}
+		
+		/* Pruebas de proyecciones */
+		/* Sin proyecciones - necesitas un metodo para devolver cada tipo de dato */
+//		var actor = new ActorDTO(0, "FROM", "DTO");
+//		dao.save(ActorDTO.from(actor));
+//		dao.findAll().forEach(item -> System.out.println(ActorDTO.from(item)));
+		System.out.println("Sin proyeccion");
+		dao.readByActorIdGreaterThanEqual(200).forEach(System.out::println);
+		dao.queryByActorIdGreaterThanEqual(200).forEach(item -> System.out.println(item.getId()+" "+item.getNombre()));
+		
+		/* Con proyeccion - permite usar el mismo metodo y pasarle el tipo de objeto diferente en cada caso */
+		System.out.println("Con proyeccion DTO");
+		dao.findByActorIdGreaterThanEqual(200, ActorDTO.class).forEach(System.out::println);
+		System.out.println("Con proyeccion Short");
+		dao.findByActorIdGreaterThanEqual(200, ActorShort.class).forEach(item -> System.out.println(item.getId()+" "+item.getNombre()));
 	}
 	
 	/*
@@ -91,7 +108,6 @@ public class DemoApplication implements CommandLineRunner{
 
 //	@Autowired(required = false)
 //	SaludaEnImpl kk;
-	
 	@Override
 	public void run(String... args) throws Exception {
 		System.err.println("Aplicación arrancada...");

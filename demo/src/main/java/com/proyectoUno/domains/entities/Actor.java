@@ -50,16 +50,16 @@ public class Actor extends EntityBase<Actor> implements Serializable {
 	@Column(name="first_name", nullable=false, length=45)
 	@NotBlank //No puede estar en blanco
 	@Size(max=45, min=2) //Tamaño máximo de 45 dígitos
-	@Pattern(regexp = "^[A-Z]+$", message = "tiene que estar en mayusculas") //Para estipular una expresión regular para validar el campo
+//	@Pattern(regexp = "^[A-Z]+$", message = "tiene que estar en mayusculas") //Para estipular una expresión regular para validar el campo
 	private String firstName;
 
 	@Column(name="last_name", nullable=false, length=45)
 	@NotBlank
 	@Size(max=45, min=2)
-	@NIF //Utiliza nuestro propio validador NIF creado
+//	@NIF //Utiliza nuestro propio validador NIF creado
 	private String lastName;
 
-	@Column(name="last_update", nullable=false)
+	@Column(name="last_update", nullable=false, updatable=false, insertable=false)
 	private Timestamp lastUpdate;
 
 	//bi-directional many-to-one association to FilmActor
