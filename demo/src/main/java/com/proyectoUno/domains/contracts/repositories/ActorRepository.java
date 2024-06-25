@@ -7,11 +7,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 
+import com.proyectoUno.domains.core.contrats.repositories.RepositoryWithProjections;
 import com.proyectoUno.domains.entities.Actor;
 import com.proyectoUno.domains.entities.models.ActorDTO;
 import com.proyectoUno.domains.entities.models.ActorShort;
 
-public interface ActorRepository extends JpaRepository<Actor, Integer>, JpaSpecificationExecutor<Actor>{
+public interface ActorRepository extends JpaRepository<Actor, Integer>, JpaSpecificationExecutor<Actor>,
+	RepositoryWithProjections{
+	
 	//Top 5 ordenados por nombre, orden descendiente
 	List<Actor> findTop5ByLastNameStartingWithOrderByFirstNameDesc(String prefijo);
 	//Top 5 ordenados por el campo que se indique al llamar al método
