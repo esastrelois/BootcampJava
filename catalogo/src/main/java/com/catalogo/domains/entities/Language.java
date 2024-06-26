@@ -15,7 +15,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Size;
 
 
 /**
@@ -30,7 +29,6 @@ public class Language extends EntityBase<Language> implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Size(max=3)
 	@Column(name="language_id", unique=true, nullable=false, length=3)
 	private int languageId;
 

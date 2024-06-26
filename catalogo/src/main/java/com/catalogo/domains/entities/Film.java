@@ -23,6 +23,8 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 import lombok.NonNull;
 
@@ -49,9 +51,26 @@ public class Film extends EntityBase<Film> implements Serializable {
 		this.releaseYear=releaseYear;
 	}
 	
+	
+	/*
+	public Film(int filmId, @Size(max = 128) String title, int length, Rating rating,
+			byte rentalDuration, @Digits(integer = 4, fraction = 2) BigDecimal rentalRate,
+			@Digits(integer = 5, fraction = 2) BigDecimal replacementCost, Language language, Language languageVO) {
+		this.filmId = filmId;
+		this.title = title;
+		this.length = length;
+		this.rating = rating;
+		this.rentalDuration = rentalDuration;
+		this.rentalRate = rentalRate;
+		this.replacementCost = replacementCost;
+		this.language = language;
+		this.languageVO = languageVO;
+	}
+
+*/
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Size(max=5)
 	@Column(name="film_id", unique=true, nullable=false, length=5)
 	private int filmId;
 
@@ -61,8 +80,8 @@ public class Film extends EntityBase<Film> implements Serializable {
 	@Column(name="last_update", insertable=false, updatable=false, nullable=false)
 	private Timestamp lastUpdate;
 
-	@Size(max=5)
-	@Column(length=5)
+	@Max(1000)
+	@Min(1)
 	private int length;
 
 	public enum Rating {
@@ -80,7 +99,6 @@ public class Film extends EntityBase<Film> implements Serializable {
 	@Column(name="release_year")
 	private Short releaseYear;
 
-	@Size(max=3)
 	@Column(name="rental_duration", nullable=false, length=3)
 	private byte rentalDuration;
 

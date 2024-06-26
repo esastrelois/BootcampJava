@@ -45,7 +45,6 @@ public class Actor extends EntityBase<Actor> implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Size(max=5)
 	@Column(name="actor_id", unique=true, nullable=false, length=5)
 	private int actorId;
 
