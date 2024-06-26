@@ -14,8 +14,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.catalogo.domains.entities.Film;
-
 @DisplayName("Pruebas de la clase Film")
 @TestMethodOrder(MethodOrderer.MethodName.class)
 @SpringBootTest
@@ -43,6 +41,9 @@ public class FilmTest {
 		    	
 		    	assertTrue(film.equals(film2));
 		    }
+		}
+		@Nested
+		class KO{
 			@Test
 			@DisplayName("Length no valida")
 			public void testLengthNoValida() {

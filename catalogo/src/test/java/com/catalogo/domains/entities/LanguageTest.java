@@ -38,6 +38,9 @@ class LanguageTest {
 		    	
 		    	assertTrue(lenguaje.equals(lenguaje2));
 			}
+		}
+		@Nested
+		class KO{
 			@Test
 			@DisplayName("Name no valido")
 			public void testNameNoValido() {

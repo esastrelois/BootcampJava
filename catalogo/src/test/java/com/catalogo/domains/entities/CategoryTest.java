@@ -28,7 +28,7 @@ class CategoryTest {
 	@DisplayName("Validacion de datos")
 	class validacionDatos{
 		@Nested
-		class OK {
+		class OK{
 			@Test
 			@DisplayName("Comparar dos categorías con el mismo id")
 		    public void testEquals() {
@@ -38,6 +38,9 @@ class CategoryTest {
 		    	
 		    	assertTrue(categoria.equals(categoria2));
 			}
+		}
+		@Nested
+		class KO {
 			@Test
 			@DisplayName("Name no valido")
 			public void testNameNoValido() {

@@ -29,6 +29,12 @@ class ActorTest {
 		@Nested
 		class OK {
 			@Test
+			@DisplayName("Es un actor valido")
+			void testIsValid() {
+				var actor2 = new Actor(0, "Pepito", "GRILLO");
+				assertTrue(actor2.isValid());
+			}
+			@Test
 			@DisplayName("Comparar dos actores con el mismo id")
 		    public void testEquals() {
 				actor.setActorId(1);
@@ -37,6 +43,10 @@ class ActorTest {
 		    	
 		    	assertTrue(actor.equals(actor2));
 			}
+		}
+		
+		@Nested
+		class KO {
 			@Test
 			@DisplayName("FirstName no valido")
 			public void testFirstNameNoValido() {
