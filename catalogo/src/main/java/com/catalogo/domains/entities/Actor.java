@@ -60,7 +60,7 @@ public class Actor extends EntityBase<Actor> implements Serializable {
 	@Pattern(regexp = "[a-zA-Z ]+", message = "tienen que ser letras")
 	private String lastName;
 
-	@Column(name="last_update", nullable=false, updatable=false, insertable=false)
+	@Column(name="last_update", /*nullable=false,*/ updatable=false, insertable=false)
 	@JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
 	private Timestamp lastUpdate;
 
