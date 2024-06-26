@@ -50,24 +50,6 @@ public class Film extends EntityBase<Film> implements Serializable {
 		this.description=description;
 		this.releaseYear=releaseYear;
 	}
-	
-	
-	/*
-	public Film(int filmId, @Size(max = 128) String title, int length, Rating rating,
-			byte rentalDuration, @Digits(integer = 4, fraction = 2) BigDecimal rentalRate,
-			@Digits(integer = 5, fraction = 2) BigDecimal replacementCost, Language language, Language languageVO) {
-		this.filmId = filmId;
-		this.title = title;
-		this.length = length;
-		this.rating = rating;
-		this.rentalDuration = rentalDuration;
-		this.rentalRate = rentalRate;
-		this.replacementCost = replacementCost;
-		this.language = language;
-		this.languageVO = languageVO;
-	}
-
-*/
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

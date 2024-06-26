@@ -15,6 +15,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Size;
 
 
 /**
@@ -35,6 +36,7 @@ public class Language extends EntityBase<Language> implements Serializable {
 	@Column(name="last_update", insertable=false, updatable=false, nullable=false)
 	private Timestamp lastUpdate;
 
+	@Size(max = 20)
 	@Column(nullable=false, length=20)
 	private String name;
 

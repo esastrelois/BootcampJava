@@ -17,6 +17,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Size;
 
 
 /**
@@ -39,6 +40,7 @@ public class Category extends EntityBase<Category> implements Serializable {
 	@JsonIgnore //Para que no la serialice
 	private Timestamp lastUpdate;
 
+	@Size(max = 25)
 	@Column(nullable=false, length=25)
 	@JsonProperty("categoria")
 	private String name;
