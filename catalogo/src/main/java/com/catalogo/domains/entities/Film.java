@@ -50,6 +50,14 @@ public class Film extends EntityBase<Film> implements Serializable {
 		this.description=description;
 		this.releaseYear=releaseYear;
 	}
+	
+	public Film(int filmId, @NonNull @Size(max = 128) String title, String description) {
+		super();
+		this.filmId = filmId;
+		this.description = description;
+		this.title = title;
+		this.length = 1;
+	}
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
