@@ -1,4 +1,4 @@
-package com.catalogo;
+package com.catalogo.domains.entities;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

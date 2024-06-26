@@ -1,4 +1,4 @@
-package com.catalogo;
+package com.catalogo.domains.entities;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,4 +1,4 @@
-package com.catalogo;
+package com.catalogo.domains.entities;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -11,17 +11,17 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import com.catalogo.domains.entities.Actor;
-import com.catalogo.domains.entities.Language;
+import com.catalogo.domains.entities.Category;
 
-class LanguageTest {
+class CategoryTest {
 
-	Language lenguaje;
-	List<Actor> lenguajes = new ArrayList<>();
+	Category categoria;
+	List<Category> categorias = new ArrayList<>();
 	
 	@BeforeEach
 	void setUp() throws Exception {
-		lenguaje = new Language();
-		lenguajes = new ArrayList<>();
+		categoria = new Category();
+		categorias = new ArrayList<>();
 	}
 	
 	@Nested
@@ -30,20 +30,21 @@ class LanguageTest {
 		@Nested
 		class OK {
 			@Test
-			@DisplayName("Comparar dos lenguajes con el mismo id")
+			@DisplayName("Comparar dos categorías con el mismo id")
 		    public void testEquals() {
-				lenguaje.setLanguageId(1);
-		    	Language lenguaje2= new Language();
-		    	lenguaje2.setLanguageId(1);
+				categoria.setCategoryId(1);
+		    	Category categoria2= new Category();
+		    	categoria2.setCategoryId(1);;
 		    	
-		    	assertTrue(lenguaje.equals(lenguaje2));
+		    	assertTrue(categoria.equals(categoria2));
 			}
 			@Test
 			@DisplayName("Name no valido")
 			public void testNameNoValido() {
-				lenguaje.setName("Comparar dos lenguajes con el mismo id");
-				assertTrue(lenguaje.isInvalid());
+				categoria.setName("Documentaries on Climate Change");
+				assertTrue(categoria.isInvalid());
 			}
 		}
 	}
+
 }
