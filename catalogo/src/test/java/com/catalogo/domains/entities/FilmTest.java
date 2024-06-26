@@ -1,8 +1,11 @@
 package com.catalogo.domains.entities;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +15,8 @@ import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @DisplayName("Pruebas de la clase Film")
@@ -33,21 +38,61 @@ public class FilmTest {
 		@Nested
 		class OK {
 			@Test
-			@DisplayName("Comparar dos películas con el mismo id")
-		    public void testEquals() {
-		    	film.setFilmId(1);
-		    	Film film2 = new Film();
-		    	film2.setFilmId(1);
-		    	
-		    	assertTrue(film.equals(film2));
-		    }
+			@DisplayName("Es una pelicula valida")
+			void testIsValid() {
+				// Crear una instancia de Language para usar en la película
+		        Language language = new Language();
+		        language.setLanguageId(1);
+		        language.setName("English");
+
+		        // Crear una instancia válida de Film
+		        Film peliculaValida = new Film();
+		        peliculaValida.setFilmId(1);
+		        peliculaValida.setTitle("Inception");
+		        peliculaValida.setDescription("A mind-bending thriller by Christopher Nolan.");
+		        peliculaValida.setReleaseYear((short) 2010);
+		        peliculaValida.setRentalDuration((byte) 7);
+		        peliculaValida.setRentalRate(new BigDecimal("4.99"));
+		        peliculaValida.setReplacementCost(new BigDecimal("19.99"));
+		        peliculaValida.setLength(148); // Duración en minutos
+		        peliculaValida.setRating(Film.Rating.PG_13);
+		        peliculaValida.setLanguage(language);
+		        peliculaValida.setLastUpdate(new Timestamp(System.currentTimeMillis()));
+		        assertTrue(peliculaValida.isValid());
+			}
+			@Test
+			@DisplayName("Solo compara la PK")
+			void testPrimaryKeyOK() {
+				var fixture1 = new Film(666, "Pelicula nueva de Inside Out",(short)2024);
+				var fixture2 = new Film(666, "Pelicula nueva de Inside Out",(short)2024);
+				assertAll("PK", 
+						() -> assertTrue(fixture1.equals(fixture2)),
+						() -> assertTrue(fixture2.equals(fixture1)),
+						() -> assertTrue(fixture1.hashCode() == fixture2.hashCode())
+						);
+			}
+
+			@Test
+			@DisplayName("Solo la PK diferente")
+			void testPrimaryKeyKO() {
+				var fixture1 = new Film(666, "Pelicula nueva de Inside Out",(short)2024);
+				var fixture2 = new Film(665, "Pelicula nueva de Inside Out",(short)2024);
+				assertAll("PK", 
+						() -> assertFalse(fixture1.equals(fixture2)),
+						() -> assertFalse(fixture2.equals(fixture1)),
+						() -> assertTrue(fixture1.hashCode() != fixture2.hashCode())
+						);
+			}
 		}
 		@Nested
 		class KO{
-			@Test
-			@DisplayName("Length no valida")
-			public void testLengthNoValida() {
-				film.setLength(2000);
+			@DisplayName("La length debe ser un numero entre 1 y 1000")
+			@ParameterizedTest(name = "length: -{0}- -> {1}")
+			@CsvSource(value = {"-1,'ERRORES: length: debe ser un numero entre 1 y 1000'",
+								"0,'ERRORES: length: debe ser un numero entre 1 y 1000'",
+								"10001,'ERRORES: length: debe ser un numero entre 1 y 1000'"})
+			public void testLengthNoValida(int valor, String error) {
+				film.setLength((short)valor);
 				assertTrue(film.isInvalid());
 			}
 			@Test
@@ -57,24 +102,25 @@ public class FilmTest {
 			        
 				assertTrue(film.isInvalid());
 			}
-			@Test
-			@DisplayName("Rental rate no válido")
-			public void testRentalRateNoValido() {
-				// Introducir un valor no válido
-		        film.setRentalRate(new BigDecimal("12345.67"));
+			@DisplayName("El rental rate debe tener máximo 4 enteros y 2 decimales")
+			@ParameterizedTest(name = "rental rate: -{0}- -> {1}")
+			@CsvSource(value = {"12345.67,'ERRORES: rental rate: debe tener máximo 4 enteros y 2 decimales'"})
+			public void testRentalRateNoValido(double valor, String error) {
+				film.setRentalRate(new BigDecimal(valor));
 		        assertTrue(film.isInvalid());
 			}
-			@Test
-			@DisplayName("Replacement cost no válido")
-			public void testReplacementCostNoValido() {
-				// Introducir un valor no válido
-		        film.setReplacementCost(new BigDecimal("123456.78"));
+			@DisplayName("El replacement cost debe tener máximo 5 enteros y 2 decimales")
+			@ParameterizedTest(name = "replacement cost: -{0}- -> {1}")
+			@CsvSource(value = {"123456.78,'ERRORES: replacement cost: debe tener máximo 5 enteros y 2 decimales'"})
+			public void testReplacementCostNoValido(double valor, String error) {
+				film.setReplacementCost(new BigDecimal(valor));
 		        assertTrue(film.isInvalid());
 			}
-			@Test
-			@DisplayName("Titulo no valido")
-			public void testTituloNoValido() {
-				film.setTitle("Exploración profunda de los efectos intergeneracionales del cambio climático global en comunidades vulnerables: un estudio longitudinal y comparativo en regiones costeras del sudeste asiático y el impacto en la seguridad alimentaria y la migración humana");
+			@DisplayName("El titulo debe ser una cadena y no ser nula")
+			@ParameterizedTest(name = "title: -{0}- -> {1}")
+			@CsvSource(value = {"'','ERRORES: title: debe ser una cadena y no ser nula'"})
+			public void testTitleNoValido(String valor, String error) {
+				film.setTitle(valor);
 				assertTrue(film.isInvalid());
 			}
 		}

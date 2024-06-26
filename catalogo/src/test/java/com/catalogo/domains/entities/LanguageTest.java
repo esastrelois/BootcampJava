@@ -1,5 +1,7 @@
 package com.catalogo.domains.entities;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
@@ -9,9 +11,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-
-import com.catalogo.domains.entities.Actor;
-import com.catalogo.domains.entities.Language;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class LanguageTest {
 
@@ -30,23 +31,54 @@ class LanguageTest {
 		@Nested
 		class OK {
 			@Test
-			@DisplayName("Comparar dos lenguajes con el mismo id")
-		    public void testEquals() {
-				lenguaje.setLanguageId(1);
-		    	Language lenguaje2= new Language();
-		    	lenguaje2.setLanguageId(1);
-		    	
-		    	assertTrue(lenguaje.equals(lenguaje2));
+			@DisplayName("Es un lenguaje valido")
+			void testIsValid() {
+				var fixture = new Language();
+				fixture.setLanguageId(100);
+				fixture.setName("Asturiano");
+				assertTrue(fixture.isValid());
+			}
+			@Test
+			@DisplayName("Solo compara la PK")
+			void testPrimaryKeyOK() {
+				var fixture1 = new Language();
+				fixture1.setLanguageId(666);
+				fixture1.setName("Asturiano");
+				var fixture2 = new Language();
+				fixture2.setLanguageId(666);
+				fixture2.setName("Asturiano");
+				assertAll("PK", 
+						() -> assertTrue(fixture1.equals(fixture2)),
+						() -> assertTrue(fixture2.equals(fixture1)),
+						() -> assertTrue(fixture1.hashCode() == fixture2.hashCode())
+						);
+			}
+			@Test
+			@DisplayName("Solo la PK diferente")
+			void testPrimaryKeyKO() {
+				var fixture1 = new Language();
+				fixture1.setLanguageId(666);
+				fixture1.setName("Asturiano");
+				var fixture2 = new Language();
+				fixture2.setLanguageId(665);
+				fixture2.setName("Asturiano");
+				assertAll("PK", 
+						() -> assertFalse(fixture1.equals(fixture2)),
+						() -> assertFalse(fixture2.equals(fixture1)),
+						() -> assertTrue(fixture1.hashCode() != fixture2.hashCode())
+						);
 			}
 		}
 		@Nested
-		class KO{
-			@Test
-			@DisplayName("Name no valido")
-			public void testNameNoValido() {
-				lenguaje.setName("Comparar dos lenguajes con el mismo id");
+		class KO {
+			@DisplayName("El name debe ser una cadena de máximo 20 caracteres")
+			@ParameterizedTest(name = "name: -{0}- -> {1}")
+			@CsvSource(value = {"'Asturiano de nueva creacion en Gijon','ERRORES: name: debe ser una cadena de máximo 20 caracteres'"})
+			public void testNameNoValido(String valor, String error) {
+				lenguaje.setName(valor);
 				assertTrue(lenguaje.isInvalid());
 			}
 		}
 	}
+	
 }
