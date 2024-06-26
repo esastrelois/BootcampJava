@@ -18,6 +18,7 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 
@@ -44,19 +45,20 @@ public class Actor extends EntityBase<Actor> implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="actor_id", unique=true, nullable=false)
+	@Size(max=5)
+	@Column(name="actor_id", unique=true, nullable=false, length=5)
 	private int actorId;
 
 	@Column(name="first_name", nullable=false, length=45)
 	@NotBlank //No puede estar en blanco
 	@Size(max=45, min=2) //Tamaño máximo de 45 dígitos
-//	@Pattern(regexp = "^[A-Z]+$", message = "tiene que estar en mayusculas") //Para estipular una expresión regular para validar el campo
+	@Pattern(regexp = "[a-zA-Z ]+", message = "tienen que ser letras") //Para estipular una expresión regular para validar el campo
 	private String firstName;
 
 	@Column(name="last_name", nullable=false, length=45)
 	@NotBlank
 	@Size(max=45, min=2)
-//	@NIF //Utiliza nuestro propio validador NIF creado
+	@Pattern(regexp = "[a-zA-Z ]+", message = "tienen que ser letras")
 	private String lastName;
 
 	@Column(name="last_update", nullable=false, updatable=false, insertable=false)

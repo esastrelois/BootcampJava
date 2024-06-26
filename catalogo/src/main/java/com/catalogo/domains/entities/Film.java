@@ -1,13 +1,30 @@
 package com.catalogo.domains.entities;
 
 import java.io.Serializable;
-import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
 
 import com.catalogo.domains.core.entities.EntityBase;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Size;
+import lombok.NonNull;
 
 
 /**
@@ -34,7 +51,8 @@ public class Film extends EntityBase<Film> implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="film_id", unique=true, nullable=false)
+	@Size(max=5)
+	@Column(name="film_id", unique=true, nullable=false, length=5)
 	private int filmId;
 
 	@Lob
@@ -43,23 +61,39 @@ public class Film extends EntityBase<Film> implements Serializable {
 	@Column(name="last_update", insertable=false, updatable=false, nullable=false)
 	private Timestamp lastUpdate;
 
+	@Size(max=5)
+	@Column(length=5)
 	private int length;
 
-	@Column(length=1)
-	private String rating;
-
+	public enum Rating {
+	    G,
+	    PG,
+	    PG_13,
+	    R,
+	    NC_17
+	}
+	
+	@Enumerated(EnumType.STRING)
+    @Column(length = 5) // Ajusta la longitud según necesites
+	private Rating rating;
+	
 	@Column(name="release_year")
 	private Short releaseYear;
 
-	@Column(name="rental_duration", nullable=false)
+	@Size(max=3)
+	@Column(name="rental_duration", nullable=false, length=3)
 	private byte rentalDuration;
 
-	@Column(name="rental_rate", nullable=false, precision=10, scale=2)
+	@Digits(integer = 4, fraction = 2)
+	@Column(name="rental_rate", nullable=false, precision=4, scale=2)
 	private BigDecimal rentalRate;
 
-	@Column(name="replacement_cost", nullable=false, precision=10, scale=2)
+	@Digits(integer = 5, fraction = 2)
+	@Column(name="replacement_cost", nullable=false, precision=5, scale=2)
 	private BigDecimal replacementCost;
 
+	@NonNull
+	@Size(max=128)
 	@Column(nullable=false, length=128)
 	private String title;
 
@@ -116,11 +150,11 @@ public class Film extends EntityBase<Film> implements Serializable {
 		this.length = length;
 	}
 
-	public String getRating() {
-		return this.rating;
+	public Rating getRating() {
+		return rating;
 	}
 
-	public void setRating(String rating) {
+	public void setRating(Rating rating) {
 		this.rating = rating;
 	}
 

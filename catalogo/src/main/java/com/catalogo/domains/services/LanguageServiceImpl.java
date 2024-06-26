@@ -8,12 +8,14 @@ import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 
 import com.catalogo.domains.contracts.repositories.LanguageRepository;
 import com.catalogo.domains.contrats.services.LanguageService;
 import com.catalogo.domains.entities.Language;
 import com.catalogo.exceptions.InvalidDataException;
 
+@Service
 public class LanguageServiceImpl implements LanguageService{
 	private LanguageRepository dao;
 	

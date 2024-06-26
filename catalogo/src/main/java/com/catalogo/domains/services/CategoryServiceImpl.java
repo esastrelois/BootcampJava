@@ -8,6 +8,7 @@ import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 
 import com.catalogo.domains.contracts.repositories.ActorRepository;
 import com.catalogo.domains.contracts.repositories.CategoryRepository;
@@ -15,6 +16,7 @@ import com.catalogo.domains.contrats.services.CategoryService;
 import com.catalogo.domains.entities.Category;
 import com.catalogo.exceptions.InvalidDataException;
 
+@Service
 public class CategoryServiceImpl implements CategoryService {
 	private CategoryRepository dao;
 	

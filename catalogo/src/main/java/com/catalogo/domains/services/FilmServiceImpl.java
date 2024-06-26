@@ -8,6 +8,7 @@ import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 
 import com.catalogo.domains.contracts.repositories.FilmRepository;
 import com.catalogo.domains.contracts.repositories.LanguageRepository;
@@ -15,6 +16,7 @@ import com.catalogo.domains.contrats.services.FilmService;
 import com.catalogo.domains.entities.Film;
 import com.catalogo.exceptions.InvalidDataException;
 
+@Service
 public class FilmServiceImpl implements FilmService{
 	private FilmRepository dao;
 	

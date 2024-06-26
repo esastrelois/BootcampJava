@@ -1,12 +1,21 @@
 package com.catalogo.domains.entities;
 
 import java.io.Serializable;
-import jakarta.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
 
 import com.catalogo.domains.core.entities.EntityBase;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Size;
 
 
 /**
@@ -21,7 +30,8 @@ public class Language extends EntityBase<Language> implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="language_id", unique=true, nullable=false)
+	@Size(max=3)
+	@Column(name="language_id", unique=true, nullable=false, length=3)
 	private int languageId;
 
 	@Column(name="last_update", insertable=false, updatable=false, nullable=false)
