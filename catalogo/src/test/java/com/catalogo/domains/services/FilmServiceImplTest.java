@@ -134,6 +134,12 @@ class FilmServiceImplTest {
                     when(dao.existsById(1)).thenReturn(false);
                     assertThrows(NotFoundException.class, () -> srv.modify(film));
                 }
+                @Test
+                void testModify_InvalidFilm() {
+                    Film film = new Film(1, "", "");
+                    when(dao.existsById(1)).thenReturn(true);
+                    assertThrows(InvalidDataException.class, () -> srv.modify(film));
+                }
             }
         }
 

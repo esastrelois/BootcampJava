@@ -25,6 +25,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.NonNull;
 
@@ -64,6 +65,7 @@ public class Film extends EntityBase<Film> implements Serializable {
 	@Column(name="film_id", unique=true, nullable=false, length=5)
 	private int filmId;
 
+	@Size(min=1)
 	@Lob
 	private String description;
 

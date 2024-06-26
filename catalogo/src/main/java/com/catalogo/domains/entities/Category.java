@@ -40,7 +40,7 @@ public class Category extends EntityBase<Category> implements Serializable {
 	@JsonIgnore //Para que no la serialice
 	private Timestamp lastUpdate;
 
-	@Size(max = 25)
+	@Size(min=1, max = 25)
 	@Column(nullable=false, length=25)
 	@JsonProperty("categoria")
 	private String name;
@@ -53,6 +53,11 @@ public class Category extends EntityBase<Category> implements Serializable {
 	public Category() {
 	}
 
+	public Category(int categoryId, String name) {
+		this.categoryId=categoryId;
+		this.name=name;
+	}
+	
 	public int getCategoryId() {
 		return this.categoryId;
 	}
