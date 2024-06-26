@@ -36,7 +36,7 @@ public class Language extends EntityBase<Language> implements Serializable {
 	@Column(name="last_update", insertable=false, updatable=false, nullable=false)
 	private Timestamp lastUpdate;
 
-	@Size(max = 20)
+	@Size(min=1, max = 20)
 	@Column(nullable=false, length=20)
 	private String name;
 
@@ -51,6 +51,11 @@ public class Language extends EntityBase<Language> implements Serializable {
 	public Language() {
 	}
 
+	public Language(int languageId, String name) {
+	    this.languageId = languageId;
+	    this.name = name;
+	}
+	
 	public int getLanguageId() {
 		return this.languageId;
 	}
