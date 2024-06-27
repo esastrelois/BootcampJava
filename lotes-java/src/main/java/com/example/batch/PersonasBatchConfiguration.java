@@ -21,6 +21,7 @@ import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.batch.item.file.transform.BeanWrapperFieldExtractor;
 import org.springframework.batch.item.file.transform.DelimitedLineAggregator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.sql.init.dependency.DependsOnDatabaseInitialization;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -140,6 +141,24 @@ public class PersonasBatchConfiguration {
 	}
 
 	// Fin: De BBDD a CSV
+
+	
+	
+	
+	
+	// Tasklet
+	@Bean
+	public FTPLoadTasklet ftpLoadTasklet(@Value("${input.dir.name:./ftp}") String dir) {
+		FTPLoadTasklet tasklet = new FTPLoadTasklet();
+		tasklet.setDirectoryResource(new FileSystemResource(dir));
+		return tasklet;
+	}
+	@Bean
+	Step copyFilesInDir(FTPLoadTasklet ftpLoadTasklet) {
+		return new StepBuilder("copyFilesInDir", jobRepository)
+				.tasklet(ftpLoadTasklet, transactionManager)
+				.build();
+	}
 	
 	
 	
@@ -147,13 +166,13 @@ public class PersonasBatchConfiguration {
 	
 	// Job
 	@Bean
-	public Job personasJob(PersonasJobListener listener, Step importCSV2DBStep1,
+	public Job personasJob(PersonasJobListener listener, Step copyFilesInDir, Step importCSV2DBStep1,
 			Step exportDB2CSVStep) {
-		return new JobBuilder("personasJob", jobRepository) // Crea un job llamado "personasJob" y lo deja en el
-															// repositorio "jobRepository"
+		return new JobBuilder("personasJob", jobRepository) // Crea un job llamado "personasJob" y lo deja en el repositorio "jobRepository"
 				.incrementer(new RunIdIncrementer())
 				.listener(listener)
-				.start(importCSV2DBStep1)
+				.start(copyFilesInDir)
+				.next(importCSV2DBStep1)
 				.next(exportDB2CSVStep)
 				.build();
 	}
