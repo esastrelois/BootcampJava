@@ -33,3 +33,9 @@
     * Testing con jUnit y Mockito. 
     * Uso de objetos DTO. 
     * Excepciones y validaciones
+* Lotes-java:
+  * Personas
+    * Lectura de BBDD e importación a CSV
+    * Exportación de CSV a BBDD
+    * Exportación de XML a BBDD
+    
