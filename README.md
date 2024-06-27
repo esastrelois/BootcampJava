@@ -27,4 +27,9 @@
     * Refactorización del código
     * Test introducción a Mockito (evitando equivocaciones por acceso a BBDD desde el DAO)
 * Catalogo:
-  * Implementación completa por capas, de una parte de la BBDD de Sakila
+  * Sakila (una parte)
+    * Implementación completa por capas, de una parte de la BBDD de Sakila. 
+    * Querys con JPQL y SQL. 
+    * Testing con jUnit y Mockito. 
+    * Uso de objetos DTO. 
+    * Excepciones y validaciones
