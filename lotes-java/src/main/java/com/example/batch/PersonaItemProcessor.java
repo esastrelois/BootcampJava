@@ -8,11 +8,10 @@ import org.springframework.stereotype.Component;
 import com.example.models.Persona;
 import com.example.models.PersonaDTO;
 
-
-@Component
 /* 
  * Clase para procesar los datos
  */
+@Component
 public class PersonaItemProcessor implements ItemProcessor<PersonaDTO, Persona> {
 	private static final Logger log = LoggerFactory.getLogger(PersonaItemProcessor.class);
 	
