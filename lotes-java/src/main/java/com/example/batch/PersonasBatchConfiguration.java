@@ -10,6 +10,7 @@ import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.sql.init.dependency.DependsOnDatabaseInitialization;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
@@ -40,5 +41,22 @@ public class PersonasBatchConfiguration {
 					}})
 				.build();
 	}
+
+	@Autowired
+	public PersonaItemProcessor personaItemProcessor;
+
+	/*
+	 * Escritor a base de datos
+	 */
+	@Bean
+	@DependsOnDatabaseInitialization //Evita que se haga antes de que la base de datos esté iniciada
+	public JdbcBatchItemWriter<Persona> personaDBItemWriter(DataSource dataSource) {
+		return new JdbcBatchItemWriterBuilder<Persona>()
+				.itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
+				.sql("INSERT INTO personas VALUES (:id,:nombre,:correo,:ip)")
+				.dataSource(dataSource)
+				.build();
+	}
+	
 	
 }
