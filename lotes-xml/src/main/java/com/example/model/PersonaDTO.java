@@ -2,11 +2,11 @@ package com.example.model;
 
 import lombok.Data;
 
-@Data
 /* 
  * Objeto con los campos que tiene el csv que vamos a leer, 
  * para transformarlo a objeto Persona y meterlo en la base de datos 
  */
+@Data
 public class PersonaDTO {
 	private long id;
 	private String nombre;
