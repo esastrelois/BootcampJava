@@ -6,6 +6,7 @@ target/**
 *.class
 kk/**
 libraries/**
+*.gitkeep
 
 # eclipse specific
 *.pydevproject
