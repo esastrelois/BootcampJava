@@ -24,7 +24,9 @@ import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
 import org.springframework.batch.item.file.transform.BeanWrapperFieldExtractor;
 import org.springframework.batch.item.file.transform.DelimitedLineAggregator;
 import org.springframework.batch.item.xml.StaxEventItemReader;
+import org.springframework.batch.item.xml.StaxEventItemWriter;
 import org.springframework.batch.item.xml.builder.StaxEventItemReaderBuilder;
+import org.springframework.batch.item.xml.builder.StaxEventItemWriterBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.sql.init.dependency.DependsOnDatabaseInitialization;
@@ -48,7 +50,7 @@ public class PersonasBatchConfiguration {
 	@Autowired
 	PlatformTransactionManager transactionManager;
 
-	// Inicio: De CSV a BBDD
+	// Inicio: Importación de CSV a BBDD
 
 	/*
 	 * Lector de ficheros
@@ -101,7 +103,7 @@ public class PersonasBatchConfiguration {
 	
 	
 	
-	// Inicio: De BBDD a CSV
+	// Inicio: Exportación de BBDD a CSV
 	
 	/*
 	 * Lector de BBDD
@@ -136,7 +138,7 @@ public class PersonasBatchConfiguration {
 	}
 	
 	/*
-	 * Importa la BBDD a CSV utilizando el reader, el processor y el writer creados anteriormente
+	 * Exporta la BBDD a CSV utilizando el reader, el processor y el writer creados anteriormente
 	 */
 	@Bean
 	Step exportDB2CSVStep(JdbcCursorItemReader<Persona> personaDBItemReader) {
@@ -147,7 +149,7 @@ public class PersonasBatchConfiguration {
 				.build();
 	}
 
-	// Fin: De BBDD a CSV
+	// Fin: Exportación de BBDD a CSV
 
 	
 	
@@ -171,24 +173,7 @@ public class PersonasBatchConfiguration {
 	
 	
 	
-	// Job
-	@Bean
-	public Job personasJob(PersonasJobListener listener, Step copyFilesInDir, Step importCSV2DBStep1,
-			Step exportDB2CSVStep) {
-		return new JobBuilder("personasJob", jobRepository) // Crea un job llamado "personasJob" y lo deja en el repositorio "jobRepository"
-				.incrementer(new RunIdIncrementer())
-				.listener(listener)
-				.start(copyFilesInDir)
-				.next(importCSV2DBStep1)
-				.next(exportDB2CSVStep)
-				.build();
-	}
-	
-	
-	
-	
-	
-	// Inicio: De XML a BBDD
+	// Inicio: Importación de XML a BBDD
 	
 	/*
 	 * Lector de fichero xml
@@ -218,5 +203,73 @@ public class PersonasBatchConfiguration {
 			.writer(personaDBItemWriter).build();
 	}
 	
-	// Fin: De XML a BBDD
+	// Fin: Importación de XML a BBDD
+	
+	
+	
+	
+	// Inicio: Exportación de BBDD a XML
+	/*
+	 * Escritor de XML a base de datos
+	 */
+	public StaxEventItemWriter<Persona> personaXMLItemWriter() {
+		XStreamMarshaller marshaller = new XStreamMarshaller();
+		Map<String, Class> aliases = new HashMap<>();
+		aliases.put("Persona", Persona.class);
+		marshaller.setAliases(aliases);
+		return new StaxEventItemWriterBuilder<Persona>()
+				.name("personaXMLItemWriter")
+				.resource(new FileSystemResource("output/outputData.xml"))
+				.marshaller(marshaller)
+				.rootTagName("Personas")
+				.overwriteOutput(true)
+				.build();
+	}
+	
+	/*
+	 * Exporta la BBDD a XML utilizando el reader, el processor y el writer creados anteriormente
+	 */
+	@Bean
+	public Step exportDB2XMLStep(JdbcCursorItemReader<Persona> personaDBItemReader) {
+		return new StepBuilder("exportDB2XMLStep", jobRepository)
+				.<Persona, Persona>chunk(100, transactionManager)
+				.reader(personaDBItemReader)
+				.writer(personaXMLItemWriter())
+				.build();
+	}
+	
+	//Fin: Exportación de BBDD a XML
+	
+	
+	
+	
+	
+	// Job
+	
+//	/* personasJob para archivos CSV */
+//	@Bean
+//	public Job personasJob(PersonasJobListener listener, Step copyFilesInDir, Step importCSV2DBStep1,
+//			Step exportDB2CSVStep) {
+//		return new JobBuilder("personasJob", jobRepository) // Crea un job llamado "personasJob" y lo deja en el repositorio "jobRepository"
+//				.incrementer(new RunIdIncrementer())
+//				.listener(listener)
+//				.start(copyFilesInDir)
+//				.next(importCSV2DBStep1)
+//				.next(exportDB2CSVStep)
+//				.build();
+//	}
+	
+	/* personasJob para archivos XML*/
+	@Bean
+	public Job personasJob(Step importXML2DBStep1, Step 
+			exportDB2XMLStep, Step exportDB2CSVStep) {
+			return new JobBuilder("personasJob", jobRepository)
+			.incrementer(new RunIdIncrementer())
+			.start(importXML2DBStep1)
+			.next(exportDB2XMLStep)
+			.next(exportDB2CSVStep)
+			.build();
+	}
+	
+
 }

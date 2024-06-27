@@ -35,7 +35,8 @@
     * Excepciones y validaciones
 * Lotes-java:
   * Personas
-    * Lectura de BBDD e importación a CSV
-    * Exportación de CSV a BBDD
-    * Exportación de XML a BBDD
+    * Importación de CSV a BBDD
+    * Exportación de BBDD a CSV
+    * Importación de XML a BBDD
+    * Exportación de BBDD a XML
     
