@@ -1,5 +1,6 @@
 package com.catalogo.domains.contracts.repositories;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.data.domain.Sort;
@@ -11,8 +12,7 @@ import com.catalogo.domains.core.contrats.repositories.RepositoryWithProjections
 import com.catalogo.domains.entities.Actor;
 import com.catalogo.domains.entities.models.ActorDTO;
 
-public interface ActorRepository extends JpaRepository<Actor, Integer>, JpaSpecificationExecutor<Actor>,
-	RepositoryWithProjections{
+public interface ActorRepository extends JpaRepository<Actor, Integer>, JpaSpecificationExecutor<Actor>{
 	List<Actor> findTop5ByLastNameStartingWithOrderByFirstNameDesc(String prefijo);
 	List<Actor> findTop5ByLastNameStartingWith(String prefijo, Sort orderBy);
 	
@@ -23,4 +23,6 @@ public interface ActorRepository extends JpaRepository<Actor, Integer>, JpaSpeci
 	List<ActorDTO> readByActorIdGreaterThanEqual(int actorId);
 	
 	<T> List<T> findByActorIdGreaterThanEqual(int actorId, Class<T> proyeccion);
+	
+	List<Actor> findByLastUpdateGreaterThanEqualOrderByLastUpdate(Timestamp fecha);
 }

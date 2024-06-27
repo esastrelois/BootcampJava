@@ -3,7 +3,6 @@ package com.catalogo.domains.entities;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
@@ -12,6 +11,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQuery;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
 
@@ -45,6 +45,14 @@ public class FilmActor implements Serializable {
 	public FilmActor() {
 	}
 
+	public FilmActor(Film film, Actor actor) {
+		super();
+		this.actor = actor;
+		this.film = film;
+	}
+
+
+
 	public FilmActorPK getId() {
 		return this.id;
 	}
@@ -75,6 +83,12 @@ public class FilmActor implements Serializable {
 
 	public void setFilm(Film film) {
 		this.film = film;
+	}
+	
+	@PrePersist
+	void prePersiste() {
+		if(id == null)
+			setId(new FilmActorPK(film.getFilmId(), actor.getActorId()));
 	}
 
 }

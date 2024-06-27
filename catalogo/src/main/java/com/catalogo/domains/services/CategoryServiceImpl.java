@@ -24,31 +24,6 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 	
 	@Override
-	public <T> List<T> getByProjection(Class<T> type) {
-		return dao.findAllBy(type);
-	}
-
-	@Override
-	public <T> Iterable<T> getByProjection(Sort sort, Class<T> type) {
-		return dao.findAllBy(sort,type);
-	}
-
-	@Override
-	public <T> Page<T> getByProjection(Pageable pageable, Class<T> type) {
-		return dao.findAllBy(pageable, type);
-	}
-
-	@Override
-	public Iterable<Category> getAll(Sort sort) {
-		return dao.findAll(sort);
-	}
-
-	@Override
-	public Page<Category> getAll(Pageable pageable) {
-		return dao.findAll(pageable);
-	}
-
-	@Override
 	public List<Category> getAll() {
 		return dao.findAll();
 	}

@@ -22,31 +22,6 @@ public class LanguageServiceImpl implements LanguageService{
 	public LanguageServiceImpl(LanguageRepository dao) {
 		this.dao = dao;
 	}
-	
-	@Override
-	public <T> List<T> getByProjection(Class<T> type) {
-		return dao.findAllBy(type);
-	}
-
-	@Override
-	public <T> Iterable<T> getByProjection(Sort sort, Class<T> type) {
-		return dao.findAllBy(sort,type);
-	}
-
-	@Override
-	public <T> Page<T> getByProjection(Pageable pageable, Class<T> type) {
-		return dao.findAllBy(pageable, type);
-	}
-
-	@Override
-	public Iterable<Language> getAll(Sort sort) {
-		return dao.findAll(sort);
-	}
-
-	@Override
-	public Page<Language> getAll(Pageable pageable) {
-		return dao.findAll(pageable);
-	}
 
 	@Override
 	public List<Language> getAll() {
