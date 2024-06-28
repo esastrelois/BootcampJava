@@ -15,6 +15,9 @@
     * Proyecciones
     * Paginación (PageRequest)
     * Serialización
+  * Calculator
+    * Proxy y WS
+    * Conexión con servidor de demo-ws
 * ProyectoUno-maven:
   * Calculadora y persona
     * Test básicos, test parametrizados (@ParameterizedTest) y varios casos en un mismo test (@CsvSource).
@@ -43,5 +46,8 @@
   * Personas
     * Transformación de XML a CSV
 * Demo-ws
+  * Calculator
+    * Endpoint
+    * Lanzamiento del servidor
   
     

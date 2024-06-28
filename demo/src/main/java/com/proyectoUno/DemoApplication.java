@@ -4,9 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.oxm.jaxb.Jaxb2Marshaller;
+import org.springframework.ws.client.core.WebServiceTemplate;
+import org.springframework.ws.soap.client.core.SoapActionCallback;
 
-import com.proyectoUno.domains.contrats.services.ActorService;
-import com.proyectoUno.domains.entities.models.ActorDTO;
+import com.example.webservice.schema.AddRequest;
+import com.example.webservice.schema.AddResponse;
+import com.proyectoUno.domains.contracts.repositories.ActorRepository;
+
+
 
 @SpringBootApplication
 public class DemoApplication implements CommandLineRunner{
@@ -17,20 +24,20 @@ public class DemoApplication implements CommandLineRunner{
 	}
 	
 	//PRUEBAS 3 - Utilizando servicios
-	@Autowired
-	ActorService srv;
+//	@Autowired
+//	ActorService srv;
 	
 	public void run(String... args) throws Exception {
 		System.err.println("Aplicación arrancada...");
-		srv.getByProjection(ActorDTO.class).forEach(System.out::println);
+//		srv.getByProjection(ActorDTO.class).forEach(System.out::println);
 	}
 	
 	
-	/*
+	
 	// PRUEBAS 2 - Utilizando repositorios
 	@Autowired
 	ActorRepository dao;
-	
+/*	
 	@Override
 	@Transactional //Forma 2 - para mantener la conexión abierta y que traiga toda la información de las películas siempre
 	//Si ponemos el @Transactional no es necesario el FetchType.EAGER en el atributo filmActors de Actor.java
@@ -148,4 +155,25 @@ public class DemoApplication implements CommandLineRunner{
 		System.out.println(rango.getMin() + " -> " + rango.getMax());
 	}
 	*/
+	
+	
+//	@Bean
+//	CommandLineRunner lookup(CalculatorProxy client) {
+//		return args -> { System.err.println("Calculo remoto --> " + client.add(2, 3)); };
+//	}
+	
+	@Bean
+	CommandLineRunner lookup(Jaxb2Marshaller marshaller) {
+		return args -> {		
+			WebServiceTemplate ws = new WebServiceTemplate(marshaller);
+			var request = new AddRequest();
+			request.setOp1(2);
+			request.setOp2(3);
+			var response = (AddResponse) ws.marshalSendAndReceive("http://localhost:8090/ws/calculator", 
+					 request, new SoapActionCallback("http://example.com/webservices/schemas/calculator"));
+			System.err.println("Calculo remoto --> " + response.getAddResult());
+		};
+	}
+	
+	
 }
