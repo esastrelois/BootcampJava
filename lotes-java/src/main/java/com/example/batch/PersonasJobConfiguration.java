@@ -43,7 +43,7 @@ import com.example.models.PersonaDTO;
 import com.thoughtworks.xstream.security.AnyTypePermission;
 
 @Configuration
-public class PersonasBatchConfiguration {
+public class PersonasJobConfiguration {
 	@Autowired
 	JobRepository jobRepository;
 
