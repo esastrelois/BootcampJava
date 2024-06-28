@@ -18,6 +18,7 @@
   * Calculator
     * Proxy y WS
     * Conexión con servidor de demo-ws
+    * Suma, resta, multiplicación y división con xsd y endpoint
 * ProyectoUno-maven:
   * Calculadora y persona
     * Test básicos, test parametrizados (@ParameterizedTest) y varios casos en un mismo test (@CsvSource).
