@@ -39,4 +39,9 @@
     * Exportación de BBDD a CSV
     * Importación de XML a BBDD
     * Exportación de BBDD a XML
+* Lotes-xml
+  * Personas
+    * Transformación de XML a CSV
+* Demo-ws
+  
     
