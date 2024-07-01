@@ -5,13 +5,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.oxm.jaxb.Jaxb2Marshaller;
-import org.springframework.ws.client.core.WebServiceTemplate;
-import org.springframework.ws.soap.client.core.SoapActionCallback;
 
-import com.example.webservice.schema.DivRequest;
-import com.example.webservice.schema.DivResponse;
-import com.proyectoUno.domains.contracts.repositories.ActorRepository;
+import com.proyectoUno.domains.contracts.proxies.CalculatorProxy;
 
 
 
@@ -36,7 +31,7 @@ public class DemoApplication implements CommandLineRunner{
 	
 	// PRUEBAS 2 - Utilizando repositorios
 	@Autowired
-	ActorRepository dao;
+//	ActorRepository dao;
 /*	
 	@Override
 	@Transactional //Forma 2 - para mantener la conexión abierta y que traiga toda la información de las películas siempre
@@ -156,50 +151,13 @@ public class DemoApplication implements CommandLineRunner{
 	}
 	*/
 	
-	
-//	@Bean
-//	CommandLineRunner lookup(CalculatorProxy client) {
-//		return args -> { System.err.println("Calculo remoto --> " + client.add(2, 3)); };
-//	}
-	
 	@Bean
-	CommandLineRunner lookup(Jaxb2Marshaller marshaller) {
+	CommandLineRunner lookup(CalculatorProxy client) {
 		return args -> {		
-			WebServiceTemplate ws = new WebServiceTemplate(marshaller);
-			//Suma
-//			var request = new AddRequest();
-//			request.setOp1(2);
-//			request.setOp2(3);
-//			var response = (AddResponse) ws.marshalSendAndReceive("http://localhost:8090/ws/calculator", 
-//					 request, new SoapActionCallback("http://example.com/webservices/schemas/calculator"));
-			
-			//Resta
-//			var request = new SubRequest();
-//			request.setOp1(4);
-//			request.setOp2(1);
-//			var response = (SubResponse) ws.marshalSendAndReceive("http://localhost:8090/ws/calculator", 
-//					request, new SoapActionCallback("http://example.com/webservices/schemas/calculator"));
-//			System.err.println("Calculo remoto --> " + response.getSubResult());
-			
-			//Multiplicación
-//			var request = new MultRequest();
-//			request.setOp1(4);
-//			request.setOp2(2);
-//			var response = (MultResponse) ws.marshalSendAndReceive("http://localhost:8090/ws/calculator", 
-//					request, new SoapActionCallback("http://example.com/webservices/schemas/calculator"));
-//			System.err.println("Calculo remoto --> " + response.getMultResult());
-			
-			//División
-			var request = new DivRequest();
-			request.setOp1(4);
-			request.setOp2(2);
-			var response = (DivResponse) ws.marshalSendAndReceive("http://localhost:8090/ws/calculator", 
-					request, new SoapActionCallback("http://example.com/webservices/schemas/calculator"));
-			System.err.println("Calculo remoto --> " + response.getDivResult());
+			System.err.println("Suma --> " + client.add(8, 2));
+			System.err.println("Resta --> " + client.sub(8, 2));
+			System.err.println("Multiplicacion --> " + client.mult(8, 2));
+			System.err.println("Division --> " + client.div(8, 2));
 		};
 	}
-	
-	
-	
-	
 }
