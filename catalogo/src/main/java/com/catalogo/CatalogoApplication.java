@@ -7,7 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.catalogo.domains.contracts.repositories.FilmRepository;
 import com.catalogo.domains.contrats.services.FilmService;
-import com.catalogo.domains.entities.models.FilmDTO;
+import com.catalogo.domains.entities.models.FilmShortDTO;
+
 
 @SpringBootApplication
 public class CatalogoApplication implements CommandLineRunner{
@@ -26,7 +27,7 @@ public class CatalogoApplication implements CommandLineRunner{
 	public void run(String... args) throws Exception {
 		System.err.println("Aplicación arrancada...");
 		System.out.println("Películas:");
-		frv.getByProjection(FilmDTO.class).forEach(System.out::println);
+		frv.getByProjection(FilmShortDTO.class).forEach(System.out::println);
 		
 		System.out.println("Película 20:");
 		var item = dao.findById(20);

@@ -55,7 +55,7 @@ public class FilmTest {
 		        peliculaValida.setRentalRate(new BigDecimal("4.99"));
 		        peliculaValida.setReplacementCost(new BigDecimal("19.99"));
 		        peliculaValida.setLength(148); // Duración en minutos
-		        peliculaValida.setRating(Film.Rating.PG_13);
+		        peliculaValida.setRating(Film.Rating.getEnum("PG-13"));
 		        peliculaValida.setLanguage(language);
 		        peliculaValida.setLastUpdate(new Timestamp(System.currentTimeMillis()));
 		        assertTrue(peliculaValida.isValid());
@@ -91,8 +91,8 @@ public class FilmTest {
 			@CsvSource(value = {"-1,'ERRORES: length: debe ser un numero entre 1 y 1000'",
 								"0,'ERRORES: length: debe ser un numero entre 1 y 1000'",
 								"10001,'ERRORES: length: debe ser un numero entre 1 y 1000'"})
-			public void testLengthNoValida(int valor, String error) {
-				film.setLength((short)valor);
+			public void testLengthNoValida(Integer valor, String error) {
+				film.setLength(valor);
 				assertTrue(film.isInvalid());
 			}
 			@Test

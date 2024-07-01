@@ -34,6 +34,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
+import lombok.NonNull;
 
 /**
  * The persistent class for the film database table.
@@ -45,6 +46,20 @@ import jakarta.validation.constraints.Size;
 public class Film extends EntityBase<Film> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	public Film(int filmId, String description, Short releaseYear) {
+		super();
+		this.filmId=filmId;
+		this.description=description;
+		this.releaseYear=releaseYear;
+	}
+	
+	public Film(int filmId, @NonNull @Size(max = 128) String title, String description) {
+		super();
+		this.filmId = filmId;
+		this.description = description;
+		this.title = title;
+		this.length = 1;
+	}
 	public static enum Rating {
 		GENERAL_AUDIENCES("G"), PARENTAL_GUIDANCE_SUGGESTED("PG"), PARENTS_STRONGLY_CAUTIONED("PG-13"), RESTRICTED("R"),
 		ADULTS_ONLY("NC-17");
