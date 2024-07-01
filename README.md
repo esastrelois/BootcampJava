@@ -15,6 +15,7 @@
     * Proyecciones
     * Paginación (PageRequest)
     * Serialización
+    * RestController (Resource)
   * Calculator
     * Proxy y WS
     * Conexión con servidor de demo-ws
