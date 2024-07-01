@@ -4,15 +4,13 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 
-import com.catalogo.domains.core.contrats.repositories.RepositoryWithProjections;
+import com.catalogo.domains.core.contrats.repositories.ProjectionsAndSpecificationJpaRepository;
 import com.catalogo.domains.entities.Actor;
 import com.catalogo.domains.entities.models.ActorDTO;
 
-public interface ActorRepository extends JpaRepository<Actor, Integer>, JpaSpecificationExecutor<Actor>{
+public interface ActorRepository extends ProjectionsAndSpecificationJpaRepository<Actor, Integer> {
 	List<Actor> findTop5ByLastNameStartingWithOrderByFirstNameDesc(String prefijo);
 	List<Actor> findTop5ByLastNameStartingWith(String prefijo, Sort orderBy);
 	

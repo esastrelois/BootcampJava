@@ -1,11 +1,9 @@
 package com.catalogo.domains.services;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.catalogo.domains.contracts.repositories.LanguageRepository;
@@ -16,9 +14,9 @@ import com.catalogo.exceptions.InvalidDataException;
 import com.catalogo.exceptions.NotFoundException;
 
 @Service
-public class LanguageServiceImpl implements LanguageService{
+public class LanguageServiceImpl implements LanguageService {
 	private LanguageRepository dao;
-	
+
 	public LanguageServiceImpl(LanguageRepository dao) {
 		this.dao = dao;
 	}
@@ -51,14 +49,14 @@ public class LanguageServiceImpl implements LanguageService{
 		if(item.isInvalid())
 			throw new InvalidDataException(item.getErrorsMessage(), item.getErrorsFields());
 		if(!dao.existsById(item.getLanguageId()))
-			throw new NotFoundException();		
+			throw new NotFoundException();
 		return dao.save(item);
 	}
 
 	@Override
 	public void delete(Language item) throws InvalidDataException {
 		if(item == null)
-			throw new InvalidDataException("No puede ser nulo");	
+			throw new InvalidDataException("No puede ser nulo");
 		dao.delete(item);
 	}
 
@@ -67,4 +65,9 @@ public class LanguageServiceImpl implements LanguageService{
 		dao.deleteById(id);
 	}
 
+	@Override
+	public List<Language> novedades(Timestamp fecha) {
+		return dao.findByLastUpdateGreaterThanEqualOrderByLastUpdate(fecha);
+	}
+	
 }

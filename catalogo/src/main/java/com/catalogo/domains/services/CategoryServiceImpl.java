@@ -1,11 +1,9 @@
 package com.catalogo.domains.services;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.catalogo.domains.contracts.repositories.CategoryRepository;
@@ -18,11 +16,11 @@ import com.catalogo.exceptions.NotFoundException;
 @Service
 public class CategoryServiceImpl implements CategoryService {
 	private CategoryRepository dao;
-	
+
 	public CategoryServiceImpl(CategoryRepository dao) {
 		this.dao = dao;
 	}
-	
+
 	@Override
 	public List<Category> getAll() {
 		return dao.findAll();
@@ -51,20 +49,25 @@ public class CategoryServiceImpl implements CategoryService {
 		if(item.isInvalid())
 			throw new InvalidDataException(item.getErrorsMessage(), item.getErrorsFields());
 		if(!dao.existsById(item.getCategoryId()))
-			throw new NotFoundException();		
+			throw new NotFoundException();
 		return dao.save(item);
 	}
 
 	@Override
 	public void delete(Category item) throws InvalidDataException {
 		if(item == null)
-			throw new InvalidDataException("No puede ser nulo");	
+			throw new InvalidDataException("No puede ser nulo");
 		dao.delete(item);
 	}
 
 	@Override
 	public void deleteById(Integer id) {
 		dao.deleteById(id);
+	}
+
+	@Override
+	public List<Category> novedades(Timestamp fecha) {
+		return dao.findByLastUpdateGreaterThanEqualOrderByLastUpdate(fecha);
 	}
 	
 }

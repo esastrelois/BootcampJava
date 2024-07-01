@@ -1,5 +1,6 @@
 package com.catalogo.domains.services;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,12 +16,39 @@ import com.catalogo.exceptions.DuplicateKeyException;
 import com.catalogo.exceptions.InvalidDataException;
 import com.catalogo.exceptions.NotFoundException;
 
+
+
 @Service
-public class ActorServiceImpl implements ActorService{
+public class ActorServiceImpl implements ActorService {
 	private ActorRepository dao;
 
 	public ActorServiceImpl(ActorRepository dao) {
 		this.dao = dao;
+	}
+
+	@Override
+	public <T> List<T> getByProjection(Class<T> type) {
+		return dao.findAllBy(type);
+	}
+
+	@Override
+	public <T> Iterable<T> getByProjection(Sort sort, Class<T> type) {
+		return dao.findAllBy(sort, type);
+	}
+
+	@Override
+	public <T> Page<T> getByProjection(Pageable pageable, Class<T> type) {
+		return dao.findAllBy(pageable, type);
+	}
+
+	@Override
+	public Iterable<Actor> getAll(Sort sort) {
+		return dao.findAll(sort);
+	}
+
+	@Override
+	public Page<Actor> getAll(Pageable pageable) {
+		return dao.findAll(pageable);
 	}
 
 	@Override
@@ -51,20 +79,31 @@ public class ActorServiceImpl implements ActorService{
 		if(item.isInvalid())
 			throw new InvalidDataException(item.getErrorsMessage(), item.getErrorsFields());
 		if(!dao.existsById(item.getActorId()))
-			throw new NotFoundException();		
+			throw new NotFoundException();
 		return dao.save(item);
 	}
 
 	@Override
 	public void delete(Actor item) throws InvalidDataException {
 		if(item == null)
-			throw new InvalidDataException("No puede ser nulo");	
+			throw new InvalidDataException("No puede ser nulo");
 		dao.delete(item);
 	}
 
 	@Override
 	public void deleteById(Integer id) {
 		dao.deleteById(id);
+	}
+
+	@Override
+	public void repartePremios() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<Actor> novedades(Timestamp fecha) {
+		return dao.findByLastUpdateGreaterThanEqualOrderByLastUpdate(fecha);
 	}
 	
 }

@@ -1,17 +1,13 @@
 package com.catalogo.domains.contracts.repositories;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.List;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.jpa.repository.Query;
-
-import com.catalogo.domains.core.contrats.repositories.RepositoryWithProjections;
+import com.catalogo.domains.core.contrats.repositories.ProjectionsAndSpecificationJpaRepository;
 import com.catalogo.domains.entities.Film;
 
-public interface FilmRepository extends JpaRepository<Film, Integer>, JpaSpecificationExecutor<Film>,
-RepositoryWithProjections{
+public interface FilmRepository extends ProjectionsAndSpecificationJpaRepository<Film, Integer>{
 	// Encuentra películas por título (case insensitive)
     List<Film> findByTitleIgnoreCase(String title);
 
@@ -26,4 +22,6 @@ RepositoryWithProjections{
 
     // Encuentra películas por una tasa de alquiler mayor o igual a un valor específico
     List<Film> findByRentalRateGreaterThanEqual(BigDecimal rentalRate);
+    
+    List<Film> findByLastUpdateGreaterThanEqualOrderByLastUpdate(Timestamp fecha);
 }
