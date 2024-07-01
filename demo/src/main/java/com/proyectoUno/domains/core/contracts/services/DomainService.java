@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 
 import com.proyectoUno.exceptions.InvalidDataException;
+import com.proyectoUno.exceptions.NotFoundException;
 
 //Contiene las operaciones CRUD generales
 public interface DomainService<E, K> {

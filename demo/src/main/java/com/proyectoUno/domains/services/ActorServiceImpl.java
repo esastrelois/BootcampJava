@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -14,6 +13,7 @@ import com.proyectoUno.domains.contracts.repositories.ActorRepository;
 import com.proyectoUno.domains.contrats.services.ActorService;
 import com.proyectoUno.domains.entities.Actor;
 import com.proyectoUno.exceptions.InvalidDataException;
+import com.proyectoUno.exceptions.NotFoundException;
 
 @Service
 public class ActorServiceImpl implements ActorService{
