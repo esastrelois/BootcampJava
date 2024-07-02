@@ -15,7 +15,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
-@Data @NoArgsConstructor
+@Data
 public class FilmEditDTO {
 	private int filmId;
 	private String description;
