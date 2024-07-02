@@ -186,6 +186,12 @@ public class Film extends EntityBase<Film> implements Serializable {
 		this.filmId = filmId;
 	}
 
+	public Film(int filmId, @NotBlank @Size(max = 128) String title) {
+		super();
+		this.filmId = filmId;
+		this.title = title;
+	}
+
 	public Film(@NotBlank @Size(max = 128) String title, @NotNull Language language, @Positive byte rentalDuration,
 			@Positive @DecimalMin(value = "0.0", inclusive = false) @Digits(integer = 2, fraction = 2) BigDecimal rentalRate,
 			@DecimalMin(value = "0.0", inclusive = false) @Digits(integer = 3, fraction = 2) BigDecimal replacementCost) {
