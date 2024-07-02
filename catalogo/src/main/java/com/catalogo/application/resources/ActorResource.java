@@ -78,15 +78,6 @@ public class ActorResource {
 				.toList();
 	}
 	
-	@DeleteMapping(path = "/{id}/jubilacion")
-	@ResponseStatus(HttpStatus.ACCEPTED)
-	public void jubilar(@PathVariable int id) throws NotFoundException{
-		var item = srv.getOne(id);
-		if(item.isEmpty())
-			throw new NotFoundException();
-		item.get().jubilate();
-	}
-	
 	@PostMapping
 	public ResponseEntity<Object> create(@Valid @RequestBody Actor item) throws BadRequestException, DuplicateKeyException, InvalidDataException {
 		var newItem = srv.add(item);

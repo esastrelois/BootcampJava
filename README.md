@@ -38,6 +38,7 @@
     * Testing con jUnit y Mockito. 
     * Uso de objetos DTO. 
     * Excepciones y validaciones
+    * Microservicios
 * Lotes-java:
   * Personas
     * Importación de CSV a BBDD

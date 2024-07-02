@@ -2,6 +2,7 @@ package com.catalogo.domains.entities;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -110,7 +111,7 @@ public class Actor extends EntityBase<Actor> implements Serializable {
 	}
 
 	public List<FilmActor> getFilmActors() {
-		return this.filmActors;
+		return filmActors != null ? filmActors : new ArrayList<>();
 	}
 
 	public void setFilmActors(List<FilmActor> filmActors) {
@@ -154,10 +155,6 @@ public class Actor extends EntityBase<Actor> implements Serializable {
 				+ lastUpdate + "]";
 	}
 
-	public void jubilate() {
-		
-	}
-	
 	public void recibePremio(String premio) {
 		
 	}
