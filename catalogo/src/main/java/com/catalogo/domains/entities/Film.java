@@ -60,6 +60,7 @@ public class Film extends EntityBase<Film> implements Serializable {
 		this.title = title;
 		this.length = 1;
 	}
+
 	public static enum Rating {
 		GENERAL_AUDIENCES("G"), PARENTAL_GUIDANCE_SUGGESTED("PG"), PARENTS_STRONGLY_CAUTIONED("PG-13"), RESTRICTED("R"),
 		ADULTS_ONLY("NC-17");
@@ -213,8 +214,7 @@ public class Film extends EntityBase<Film> implements Serializable {
 			@NotNull Language language, Language languageVO, @Positive byte rentalDuration,
 			@Positive @DecimalMin(value = "0.0", inclusive = false) @Digits(integer = 2, fraction = 2) BigDecimal rentalRate,
 			@Positive Integer length,
-			@DecimalMin(value = "0.0", inclusive = false) @Digits(integer = 3, fraction = 2) BigDecimal replacementCost,
-			Rating rating) {
+			@DecimalMin(value = "0.0", inclusive = false) @Digits(integer = 3, fraction = 2) BigDecimal replacementCost) {
 		super();
 		this.filmId = filmId;
 		this.title = title;
@@ -226,7 +226,6 @@ public class Film extends EntityBase<Film> implements Serializable {
 		this.rentalRate = rentalRate;
 		this.length = length;
 		this.replacementCost = replacementCost;
-		this.rating = rating;
 	}
 
 	public int getFilmId() {
