@@ -66,8 +66,8 @@ public class FilmResource {
 		return FilmShortDTO.from(item.get());
 	}
 	
-	@GetMapping(path = "/{id}/V2")
-	public FilmEditDTO getOne2(@PathVariable int id) throws NotFoundException{
+	@GetMapping(path = "/{id}/corto")
+	public FilmEditDTO getOneCorto(@PathVariable int id) throws NotFoundException{
 		var item = srv.getOne(id);
 		if(item.isEmpty())
 			throw new NotFoundException();
@@ -88,11 +88,19 @@ public class FilmResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Object> create(@Valid @RequestBody FilmEditDTO item) throws BadRequestException, DuplicateKeyException, InvalidDataException {
+	public ResponseEntity<Object> create(@Valid @RequestBody Film item) throws BadRequestException, DuplicateKeyException, InvalidDataException {
+		var newItem = srv.add(item);
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(newItem.getFilmId()).toUri();
+		return ResponseEntity.created(location).build();
+	}
+	
+	@PostMapping("/corto")
+	public ResponseEntity<Object> createCorto(@Valid @RequestBody FilmEditDTO item) throws BadRequestException, DuplicateKeyException, InvalidDataException {
 		var newItem = srv.add(FilmEditDTO.from(item));
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(newItem.getFilmId()).toUri();
-		return ResponseEntity.created(location).build();	
+		return ResponseEntity.created(location).build();
 	}
 	
 	@PutMapping("/{id}")

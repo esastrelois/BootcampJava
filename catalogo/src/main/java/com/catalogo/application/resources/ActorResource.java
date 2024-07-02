@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.catalogo.domains.contrats.services.ActorService;
+import com.catalogo.domains.entities.Actor;
 import com.catalogo.domains.entities.models.ActorDTO;
 import com.catalogo.domains.entities.models.ActorShort;
 import com.catalogo.exceptions.BadRequestException;
@@ -87,7 +88,15 @@ public class ActorResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Object> create(@Valid @RequestBody ActorDTO item) throws BadRequestException, DuplicateKeyException, InvalidDataException {
+	public ResponseEntity<Object> create(@Valid @RequestBody Actor item) throws BadRequestException, DuplicateKeyException, InvalidDataException {
+		var newItem = srv.add(item);
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(newItem.getActorId()).toUri();
+		return ResponseEntity.created(location).build();	
+	}
+	
+	@PostMapping("/corto")
+	public ResponseEntity<Object> createCorto(@Valid @RequestBody ActorDTO item) throws BadRequestException, DuplicateKeyException, InvalidDataException {
 		var newItem = srv.add(ActorDTO.from(item));
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(newItem.getActorId()).toUri();

@@ -48,7 +48,7 @@ public class LanguageResource {
 	}
 	
 	@GetMapping(path = "/{id}/V2")
-	public LanguageDTO getOne2(@PathVariable int id)  throws NotFoundException {
+	public LanguageDTO getOneCorto(@PathVariable int id)  throws NotFoundException {
 		var item = srv.getOne(id);
 		if(item.isEmpty())
 			throw new NotFoundException();
@@ -56,7 +56,17 @@ public class LanguageResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Object> create(@Valid @RequestBody LanguageDTO item) throws BadRequestException, DuplicateKeyException, InvalidDataException {
+	public ResponseEntity<Object> create(@Valid @RequestBody Language item) throws BadRequestException, DuplicateKeyException, InvalidDataException {
+		if(item == null)
+			throw new BadRequestException("Faltan los datos");
+		var newItem = srv.add(item);
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+			.buildAndExpand(newItem.getLanguageId()).toUri();
+		return ResponseEntity.created(location).build();
+	}
+	
+	@PostMapping("/corto")
+	public ResponseEntity<Object> createCorto(@Valid @RequestBody LanguageDTO item) throws BadRequestException, DuplicateKeyException, InvalidDataException {
 		if(item == null)
 			throw new BadRequestException("Faltan los datos");
 		var newItem = srv.add(LanguageDTO.from(item));
