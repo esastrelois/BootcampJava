@@ -2,17 +2,13 @@ package com.catalogo.domains.entities.models;
 
 import java.math.BigDecimal;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.catalogo.domains.entities.Film;
 import com.catalogo.domains.entities.Language;
-import com.catalogo.domains.services.LanguageServiceImpl;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 
 @Data
