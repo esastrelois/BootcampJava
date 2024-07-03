@@ -6,12 +6,14 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import com.proyectoUno.domains.core.contrats.repositories.RepositoryWithProjections;
 import com.proyectoUno.domains.entities.Actor;
 import com.proyectoUno.domains.entities.models.ActorDTO;
 import com.proyectoUno.domains.entities.models.ActorShort;
 
+@RepositoryRestResource(exported = false, path="actores", itemResourceRel="actor", collectionResourceRel="a")
 public interface ActorRepository extends JpaRepository<Actor, Integer>, JpaSpecificationExecutor<Actor>,
 	RepositoryWithProjections{
 	
