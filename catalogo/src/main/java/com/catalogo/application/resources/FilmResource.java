@@ -21,7 +21,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.catalogo.domains.contrats.services.FilmService;
 import com.catalogo.domains.entities.Film;
-import com.catalogo.domains.entities.models.ActorDTO;
 import com.catalogo.domains.entities.models.FilmEditDTO;
 import com.catalogo.domains.entities.models.FilmShortDTO;
 import com.catalogo.exceptions.BadRequestException;

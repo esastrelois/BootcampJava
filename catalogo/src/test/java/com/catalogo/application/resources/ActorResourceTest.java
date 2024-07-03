@@ -110,16 +110,16 @@ class ActorResourceTest {
 	@Test
 	void testCreate() throws Exception {
 		int id = 1;
-		var item = new Actor(id, "Pepito", "Grillo");
-		when(srv.add(item)).thenReturn(item);
-		mockMvc.perform(post("/api/actores/v1/corto")
-			.contentType(MediaType.APPLICATION_JSON)
-			.content(objectMapper.writeValueAsString(ActorDTO.from(item)))
-			)
-			.andExpect(status().isCreated())
-	        .andExpect(header().string("Location", "http://localhost/api/actores/v1/corto/1"))
-	        .andDo(print())
-	        ;
+	    var item = new Actor(id, "Pepito", "Grillo");
+	    when(srv.add(item)).thenReturn(item);
+
+	    mockMvc.perform(post("/api/actores/v1/corto")
+	        .contentType(MediaType.APPLICATION_JSON)
+	        .content(objectMapper.writeValueAsString(ActorDTO.from(item)))
+	        )
+	        .andExpect(status().isCreated())
+	        .andExpect(header().string("Location", "http://localhost/api/actores/v1/corto/" + item.getActorId()))
+	        .andDo(print());
 	}
 
 	@Test

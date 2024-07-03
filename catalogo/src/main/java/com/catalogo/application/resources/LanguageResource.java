@@ -19,6 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.catalogo.domains.contrats.services.LanguageService;
 import com.catalogo.domains.entities.Language;
+import com.catalogo.domains.entities.models.ActorDTO;
 import com.catalogo.domains.entities.models.LanguageDTO;
 import com.catalogo.exceptions.BadRequestException;
 import com.catalogo.exceptions.DuplicateKeyException;
@@ -76,12 +77,12 @@ public class LanguageResource {
 	}
 	
 	@PutMapping("/{id}")
-	public Language update(@PathVariable int id, @Valid @RequestBody Language item) throws BadRequestException, NotFoundException, InvalidDataException {
+	public void update(@PathVariable int id, @Valid @RequestBody LanguageDTO item) throws BadRequestException, NotFoundException, InvalidDataException {
 		if(item == null)
 			throw new BadRequestException("Faltan los datos");
 		if(id != item.getLanguageId())
 			throw new BadRequestException("No coinciden los identificadores");
-		return srv.modify(item);	
+		srv.modify(LanguageDTO.from(item));	
 	}
 	
 	@DeleteMapping("/{id}")
