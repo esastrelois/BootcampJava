@@ -2,7 +2,7 @@
 
 ## Secciones
 
-* Demo:
+* Demo - PRUEBAS:
   * Saluda, entorno y rango - DemoApplication Sin capas (Con pruebas 1)
     * Funcionamiento inicial de etiquetas @Service, @Component, @Scope, @Qualifier, @ConfigurationProperties
     * Evitar nulos (@Nonnull)
@@ -16,6 +16,7 @@
     * Paginación (PageRequest)
     * Serialización
     * RestController (Resource)
+    * OpenAPI - io.swagger
   * Calculator
     * Proxy y WS
     * Conexión con servidor de demo-ws
@@ -38,7 +39,8 @@
     * Testing con jUnit y Mockito. 
     * Uso de objetos DTO. 
     * Excepciones y validaciones
-    * Microservicios
+    * Servicios REST
+    * Documentación con openApi y io.swagger
 * Lotes-java:
   * Personas
     * Importación de CSV a BBDD

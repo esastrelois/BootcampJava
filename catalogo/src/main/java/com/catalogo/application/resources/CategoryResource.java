@@ -26,66 +26,104 @@ import com.catalogo.exceptions.DuplicateKeyException;
 import com.catalogo.exceptions.InvalidDataException;
 import com.catalogo.exceptions.NotFoundException;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import org.springframework.http.ProblemDetail;
 
 @RestController
+@Tag(name = "categorias-service", description = "Mantenimiento de categorias")
 @RequestMapping(path = "/api/categorias/v1")
 public class CategoryResource {
-	@Autowired
-	CategoryService srv;
-	
-	@GetMapping
-	public List<Category> getAll() {
-			return srv.getAll();
-	}
-	
-	@GetMapping(path = "/{id}")
-	public Category getOne(@PathVariable int id) throws NotFoundException {
-		var category = srv.getOne(id);
-		if(category.isEmpty())
-			throw new NotFoundException();
-		else
-			return category.get();
-	}
-	
-	@GetMapping(path = "/{id}/peliculas")
-	@Transactional
-	public List<FilmShortDTO> getPelis(@PathVariable int id) throws NotFoundException {
-		var Category = srv.getOne(id);
-		if(Category.isEmpty())
-			throw new NotFoundException();
-		else {
-			return (List<FilmShortDTO>) Category.get().getFilmCategories().stream()
-					.map(item -> FilmShortDTO.from(item.getFilm()))
-					.collect(Collectors.toList());
-		}
-	}
-	
-	@PostMapping
-	public ResponseEntity<Object> create(@Valid @RequestBody Category item) throws BadRequestException, DuplicateKeyException, InvalidDataException {
-		if(item == null)
-			throw new BadRequestException("Faltan los datos");
-		var newItem = srv.add(item);
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-			.buildAndExpand(newItem.getCategoryId()).toUri();
-		return ResponseEntity.created(location).build();
+    @Autowired
+    CategoryService srv;
 
-	}
+    @Operation(summary = "Listado de todas las categorias")
+    @ApiResponse(responseCode = "200", description = "OK")
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<Category> getAll() {
+        return srv.getAll();
+    }
 
-	@PutMapping("/{id}")
-	public Category update(@PathVariable int id, @Valid @RequestBody Category item) throws BadRequestException, NotFoundException, InvalidDataException {
-		if(item == null)
-			throw new BadRequestException("Faltan los datos");
-		if(id != item.getCategoryId())
-			throw new BadRequestException("No coinciden los identificadores");
-		return srv.modify(item);	
-	}
+    @Operation(summary = "Recupera una categoria", description = "Recupera los detalles de una categoria por su ID")
+    @ApiResponse(responseCode = "200", description = "Categoria encontrada", content = @Content(schema = @Schema(implementation = Category.class)))
+    @ApiResponse(responseCode = "404", description = "Categoria no encontrada", content = @Content(schema = @Schema(implementation = ProblemDetail.class)))
+    @GetMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Category getOne(
+            @Parameter(description = "Identificador de la categoria", required = true) @PathVariable int id) throws NotFoundException {
+        var category = srv.getOne(id);
+        if (category.isEmpty())
+            throw new NotFoundException();
+        else
+            return category.get();
+    }
 
-	@DeleteMapping("/{id}")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void delete(@PathVariable int id) {
-		srv.deleteById(id);
-	}
+    @Operation(summary = "Listado de peliculas en una categoria")
+    @ApiResponse(responseCode = "200", description = "OK")
+    @ApiResponse(responseCode = "404", description = "Categoria no encontrada", content = @Content(schema = @Schema(implementation = ProblemDetail.class)))
+    @GetMapping(path = "/{id}/peliculas")
+    @ResponseStatus(HttpStatus.OK)
+    @Transactional
+    public List<FilmShortDTO> getPelis(
+            @Parameter(description = "Identificador de la categoria", required = true) @PathVariable int id) throws NotFoundException {
+        var category = srv.getOne(id);
+        if (category.isEmpty())
+            throw new NotFoundException();
+        else {
+            return category.get().getFilmCategories().stream()
+                    .map(item -> FilmShortDTO.from(item.getFilm()))
+                    .collect(Collectors.toList());
+        }
+    }
 
+    @Operation(summary = "Añadir una nueva categoria")
+    @ApiResponse(responseCode = "201", description = "Categoria añadida")
+    @ApiResponse(responseCode = "400", description = "Datos inválidos", content = @Content(schema = @Schema(implementation = ProblemDetail.class)))
+    @PostMapping
+    @ResponseStatus(code = HttpStatus.CREATED)
+    @Transactional
+    public ResponseEntity<Object> create(
+            @Parameter(description = "Datos de la nueva categoria", required = true) @Valid @RequestBody Category item) throws BadRequestException, DuplicateKeyException, InvalidDataException {
+        if (item == null)
+            throw new BadRequestException("Faltan los datos");
+        var newItem = srv.add(item);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(newItem.getCategoryId()).toUri();
+        return ResponseEntity.created(location).build();
+    }
+
+    @Operation(summary = "Modificar una categoria existente", description = "Los identificadores deben coincidir")
+    @ApiResponse(responseCode = "200", description = "Categoria modificada", content = @Content(schema = @Schema(implementation = Category.class)))
+    @ApiResponse(responseCode = "400", description = "Datos inválidos", content = @Content(schema = @Schema(implementation = ProblemDetail.class)))
+    @ApiResponse(responseCode = "404", description = "Categoria no encontrada", content = @Content(schema = @Schema(implementation = ProblemDetail.class)))
+    @PutMapping("/{id}")
+    public Category update(
+            @Parameter(description = "Identificador de la categoria", required = true) @PathVariable int id,
+            @Parameter(description = "Datos de la categoria a modificar", required = true) @Valid @RequestBody Category item) throws BadRequestException, NotFoundException, InvalidDataException {
+        if (item == null)
+            throw new BadRequestException("Faltan los datos");
+        if (id != item.getCategoryId())
+            throw new BadRequestException("No coinciden los identificadores");
+        return srv.modify(item);
+    }
+
+    @Operation(summary = "Borrar una categoria existente")
+    @ApiResponse(responseCode = "204", description = "Categoria borrada")
+    @ApiResponse(responseCode = "404", description = "Categoria no encontrada", content = @Content(schema = @Schema(implementation = ProblemDetail.class)))
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(
+            @Parameter(description = "Identificador de la categoria", required = true) 
+            @PathVariable int id) throws BadRequestException, NotFoundException,  InvalidDataException {
+    	if(srv.getOne(id).isEmpty())
+    		throw new NotFoundException();
+        srv.deleteById(id);
+    }
 }
