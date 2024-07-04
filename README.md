@@ -52,5 +52,8 @@
   * Calculator
     * Endpoint
     * Lanzamiento del servidor
-  
+* Contactos
+  * MongoDB
+* Megusta
+  * Redis
     
