@@ -8,6 +8,7 @@
 <body>
     <h1>Ejemplos JavaScript</h1>
     <script>
+        //PRUEBAS 1
         t = [10, 20, 30]
         t[7] = "70";
 
@@ -26,10 +27,47 @@
 
         for(i in o)
             console.log(i);
-        
+
         metodo = 'm'
         o[metodo]()
         t[10] = o.m;
-        t[10]()    
+        t[10]() 
+        
+
+
+
+        //PRUEBAS 2
+        function MiClase(id, nombre){
+            this.id=id;
+            this.nombre=nombre;
+            
+            //Forma 1: Con functions
+            this.muestraId = function(){
+                console.log("El ID del objeto es: "+this.id);
+            }
+            this.ponNombre = function(nom){
+                this.nombre = nom.toUpperCase();
+            }
+        }
+
+        //Forma 2: Con prototype
+        MiClase.prototype.cont = 0;
+        MiClase.prototype.muestraId = function() {
+            console.log("El ID del objeto es "+this.id);
+        }
+        MiClase.prototype.ponNombre = function(nom){
+            this.nombre = nom.toUpperCase();
+        }
+
+        var o1 = new MiClase("99", "Objeto de prueba");
+        var o2 = new MiClase("6", "Otro de prueba");
+        console.log(o1.muestraId == o2.muestraId)
+        o1.muestraId()
+        o2.muestraId()
+        o1.muestraId = () => console.log("Hola mundo")
+        o1.muestraId()
+        o2.muestraId()
+        console.log(o1.muestraId == o2.muestraId)
+        console.log(o1.cont, o2.cont)
     </script>
 </body> 
