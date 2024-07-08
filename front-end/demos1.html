@@ -8,7 +8,7 @@
 <body>
     <h1>Ejemplos JavaScript</h1>
     <script>
-        //PRUEBAS 1
+        //PRUEBAS 1 - Operaciones básicas
         t = [10, 20, 30]
         t[7] = "70";
 
@@ -36,7 +36,7 @@
 
 
 
-        //PRUEBAS 2
+        //PRUEBAS 2 - Funciones básicas
         function MiClase(id, nombre){
             this.id=id;
             this.nombre=nombre;
@@ -69,5 +69,25 @@
         o2.muestraId()
         console.log(o1.muestraId == o2.muestraId)
         console.log(o1.cont, o2.cont)
+
+
+
+
+        // PRUEBAS 3 - Clases
+        class Persona {
+            constructor(id,nombre){
+                this.id = id;
+                this.nombre = nombre;
+            }
+            muestraId(){
+                console.log("El ID del objeto es "+this.id);
+            }
+            ponNombre(nom){
+                this.nombre = nom.toUpperCase;
+            }
+        }
+
+        console.log(++o1.cont, o2.cont++)
+        console.log(typeof MiClase, typeof Persona)
     </script>
 </body> 

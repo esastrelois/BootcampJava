@@ -58,4 +58,6 @@
   * MongoDB
 * Megusta
   * Redis
+* Front-end
+  * Demo 1 - Operaciones y funciones básicas
     
