@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplos</title>
+</head>
+<body>
+    <h1>Ejemplos JavaScript</h1>
+    <script>
+        t = [10, 20, 30]
+        t[7] = "70";
+
+        for(i in t) //Devuelve los índices del array --> 0, 1, 2, 7
+            console.log(i)
+        
+        t.push("ultimo") //Añade "ultimo" a t[8]
+        t.splice(0,2)
+        for(i=0; i<10; i++) //Muestra las 10 posiciones --> si no existían las crea con undefined
+            console.log(t[i])
+
+        o = { x:1, y: 5}
+        o.z = 7
+        o.m = () => console.log("Hola mundo")
+        delete o.y //Quita la posición y del objeto o
+
+        for(i in o)
+            console.log(i);
+        
+        metodo = 'm'
+        o[metodo]()
+        t[10] = o.m;
+        t[10]()    
+    </script>
+</body> 
