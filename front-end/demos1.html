@@ -5,8 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ejemplos</title>
 </head>
+<style>
+    output{
+        display: block;
+        width: 100px;
+        height: 100px;
+    }
+</style>
 <body>
     <h1>Ejemplos JavaScript</h1>
+    <div>
+        <input type="text" name="nombre" value="mundo">
+        <button type="button">Saluda</button>
+    </div>
+    <div>
+        <output id="salida"></output>
+    </div>
     <script>
         //PRUEBAS 1 - Operaciones básicas
         t = [10, 20, 30]
@@ -89,5 +103,16 @@
 
         console.log(++o1.cont, o2.cont++)
         console.log(typeof MiClase, typeof Persona)
+
+
+
+        
+         // PRUEBAS 4 - EVENTOS DOM
+        let txt = document.querySelector('input[name=nombre]');
+        let salida = document.querySelector('#salida');
+
+        document.querySelector('button').addEventListener('click', ev => {
+            salida.textContent = `Hola ${txt.value}`;
+        });
     </script>
 </body> 
