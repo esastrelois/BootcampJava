@@ -33,6 +33,7 @@ export class NotificationService implements OnDestroy{
 
   constructor(private out: LoggerService) { }
 
+  //Notificar en el destructor que el observable se ha completado
   ngOnDestroy(): void { 
     this.notificacion$.complete()
   }
