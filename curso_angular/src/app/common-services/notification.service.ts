@@ -2,13 +2,24 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { LoggerService } from '@my/core';
 import { Subject } from 'rxjs';
 
-export enum NotificationType { error = 'error', warn = 'warn', info = 'info', log = 'log' }
+export enum NotificationType { 
+  error = 'error', 
+  warn = 'warn', 
+  info = 'info', 
+  log = 'log' }
 
 export class Notification { 
   constructor(private id: number, private message: string, private type: NotificationType) {} 
-  public get Id() { return this.id; } 
-  public get Message() { return this.message; } 
-  public get Type() { return this.type; } 
+
+  public get Id() { 
+    return this.id; 
+  } 
+  public get Message() { 
+    return this.message; 
+  } 
+  public get Type() { 
+    return this.type; 
+  } 
 }
 
 export * from './notification.service';
