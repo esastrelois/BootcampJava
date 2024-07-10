@@ -22,7 +22,9 @@
     "lib": [
       "ES2022",
       "dom"
-    ]
+    ],
+    "baseUrl": "./",
+    "paths": { "@my/core": ["src/lib/my-core/index.ts"] } //Indica que cuando le digan @my/core, quiere la url indicada. El @ hace que esté el primero en la lista
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
