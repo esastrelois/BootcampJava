@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { LoggerService } from '@my/core';
+import { Subject } from 'rxjs';
 
 export enum NotificationType { error = 'error', warn = 'warn', info = 'info', log = 'log' }
 
@@ -13,12 +14,17 @@ export class Notification {
 export * from './notification.service';
 
 @Injectable({ providedIn: 'root'})
-export class NotificationService {
+export class NotificationService implements OnDestroy{
   public readonly NotificationType = NotificationType;
 
   private listado: Notification[]= [];
+  private notificacion$ = new Subject<Notification>();
 
   constructor(private out: LoggerService) { }
+
+  ngOnDestroy(): void { 
+    this.notificacion$.complete()
+  }
 
   public get Listado(): Notification[] { 
     return Object.assign([], this.listado); 
@@ -36,12 +42,14 @@ export class NotificationService {
     const id = this.HayNotificaciones ? 
       (this.listado[this.listado.length - 1].Id + 1) : 1; 
     const n = new Notification(id, msg, type); 
-    this.listado.push(n); 
-    // Redundancia: Los errores también se muestran en consola 
-    if (type === NotificationType.error) { 
-      this.out.error(`NOTIFICATION: ${msg}`); 
-    }
+      this.listado.push(n); 
+      this.notificacion$.next(n); 
+      // Redundancia: Los errores también se muestran en consola 
+      if (type === NotificationType.error) { 
+        this.out.error(`NOTIFICATION: ${msg}`); 
+      } 
   }
+  
   public remove(index: number) { 
     if (index < 0 || index >= this.listado.length) { 
       this.out.error('Index out of range.'); 
@@ -52,5 +60,9 @@ export class NotificationService {
 
   public clear() {
     if (this.HayNotificaciones) this.listado.splice(0); 
+  }
+
+  public get Notificacion() { 
+    return this.notificacion$; 
   }
 }
