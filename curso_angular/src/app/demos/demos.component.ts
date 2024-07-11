@@ -10,10 +10,27 @@ import { Unsubscribable } from 'rxjs';
   styleUrl: './demos.component.css'
 })
 export class DemosComponent implements OnInit, OnDestroy {
+    private nombre: string = 'mundo'
+    fecha='2024-07-11'
+    fontSize = 24
+    listado = [
+      {id: 1, nombre: 'Madrid'},
+      {id: 2, nombre: 'BARCELONA'},
+      {id: 3, nombre: 'oviedo'},
+      {id: 4, nombre: 'ciudad Real'},
+    ]
+
+    idProvincia = 2
+    resultado?: string
+    visible = true
+    estetica = {importante: true, error: false, urgente: true}
+
   //Atributo que almacena al suscriptor para poder cancelar la suscripción al destruir el componente
   private suscriptor: Unsubscribable | undefined;
 
   constructor(public vm: NotificationService) { }
+
+  
 
   //Se crea la suscripción y se indica el tratamiento de las nuevas notificaciones
   ngOnInit(): void { 
