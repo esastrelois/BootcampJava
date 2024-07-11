@@ -1,24 +1,47 @@
+<h1>Hola {{Nombre | elipsis:10 | uppercase}}</h1>
 <p>
-  <input
-    type="button"
-    value="Error"
-    (click)="vm.add('Esto es una notificación de error')"
-  />
-  <input
-    type="button"
-    value="Warn"
-    (click)="vm.add('Esta notificación es un aviso', vm.NotificationType.warn)"
-  />
-  <input
-    type="button"
-    value="Info"
-    (click)="
-      vm.add('Solo una notificación informativa', vm.NotificationType.info)
-    "
-  />
-  <input
-    type="button"
-    value="Log"
-    (click)="vm.add('Para trazar con notificaciones', vm.NotificationType.log)"
-  />
+  <input type="text" [(ngModel)]="Nombre"> <!--Hace referencia al nombre pasado al h1-->
+  <input type="button" value="saluda" (click)="saluda()">
+  <input type="button" value="despide" (click)="despide()">
+  <input type="button" value="di algo" (click)="di('algo')">
+  <input type="button" value="cambia" (click)="cambia()">
+  <input type="button" value="Error" (click)="vm.add('Esto es una notificación de error')"/>
+  <input type="button" value="Warn" (click)="vm.add('Esta notificación es un aviso', vm.NotificationType.warn)"/>
+  <input type="button" value="Info" (click)="vm.add('Solo una notificación informativa', vm.NotificationType.info)"/>
+  <input type="button" value="Log" (click)="vm.add('Para trazar con notificaciones', vm.NotificationType.log)"/>
 </p>
+<p [textContent]="resultado">Esto se pierde</p>
+<p [innerHTML]="resultado">Con HTML</p>
+<p>{{fecha | date:'dd/MMM/yyyy'}}</p>
+
+<p [hidden]="!visible">Ahora me ves</p> <!--Si es visible, hidden=false para que se muestre. Si no es visible, hidden=true para que no se muestre-->
+<p *ngIf="visible">Ahora existe</p> <!--Evalua si es visible o no, y lo muestra o lo oculta convenientemente. Pero existir existe siempre-->
+<p [ngClass]="estetica">
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ante lorem, mattis vitae tristique vitae, lobortis ullamcorper nibh. Nulla facilisi. Nulla sapien massa, pharetra a eros at, pharetra mattis dolor. Etiam nisl nunc, aliquam id tristique nec, finibus eget quam. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Maecenas sagittis augue a dolor volutpat, nec porttitor neque ullamcorper. Cras quis rhoncus dui. Sed tincidunt, erat eget dapibus cursus, felis leo posuere mi, mollis dignissim lacus ligula a risus. Nulla et porta orci. Aliquam eu mollis mauris. Donec risus lorem, semper quis mollis et, varius nec neque. Phasellus egestas hendrerit felis, eget auctor erat bibendum vel. Vivamus mollis ac risus ac tincidunt.
+Sed consequat nunc quis sapien egestas, in consectetur diam rutrum. Etiam tincidunt lorem vitae nibh fermentum, ac scelerisque erat ornare. Vivamus lobortis, ipsum et lobortis tincidunt, massa risus sodales nulla, sed mollis sem augue ut quam. Morbi dui ex, eleifend sed risus ac, accumsan pharetra leo. Sed euismod leo at arcu malesuada, id laoreet augue fermentum. Praesent non auctor felis. Fusce vel gravida dui.
+Aliquam erat volutpat. Nam euismod elit at gravida cursus. Integer ac nisl id erat posuere tincidunt. Morbi suscipit a mi ac ullamcorper. Quisque sollicitudin venenatis ultricies. Curabitur ornare odio eu ex pharetra gravida. In vitae elit magna. Ut ex erat, lobortis congue tempus quis, pretium vel ante. Ut lobortis diam mauris, non sagittis leo elementum et. Sed ut finibus ipsum. Vestibulum ac mi pellentesque, ullamcorper lacus id, hendrerit neque. Nulla lobortis elementum dui vitae cursus. Morbi a tristique odio. Pellentesque tempus sagittis erat, a elementum velit maximus id.
+Nulla quis diam sit amet tortor blandit eleifend nec eu orci. Praesent ut elementum nisi, vitae egestas purus. Proin rhoncus tempor cursus. Proin et elit varius, viverra felis vel, maximus libero. Sed vel hendrerit tellus, elementum aliquam nisi. Pellentesque nec eleifend libero. Sed urna est, tempus nec commodo quis, pulvinar vitae augue. Vestibulum eget venenatis est, id fermentum lorem. Pellentesque egestas viverra arcu, id elementum urna tincidunt ut. Vestibulum sollicitudin bibendum massa, vel fermentum lacus.
+Vestibulum egestas eu magna ac pellentesque. Ut tempor tempor neque non congue. Duis a quam et augue egestas varius. Maecenas posuere eleifend semper. Maecenas pellentesque dui diam, vel bibendum nisl pharetra ut. Quisque lobortis sodales ex, ut sollicitudin metus volutpat ut. Vestibulum faucibus turpis in arcu facilisis, eget elementum ex venenatis. Aliquam posuere metus vitae est volutpat, nec commodo neque fermentum. Nam eget luctus libero. Suspendisse vitae viverra ex, ac pretium lectus. In viverra auctor tortor et suscipit. Sed consectetur, odio vitae porta interdum, neque tortor pretium lorem, non pretium ligula purus a risus. Duis nec turpis eu felis varius suscipit. Proin nec velit blandit risus interdum maximus vitae vitae nisi. Fusce consequat lorem enim, eget condimentum leo aliquet at. Nullam scelerisque arcu ante, faucibus cursus nisi rutrum quis.
+</p>
+<p [class.semivisible]="!visible">Ahora me ves bien</p>
+
+<p> 
+  Calcula: 2 + 2 = {{(2+2) | number:'2.2-3'}} = {{calcula(2,2)| currency:'EUR':'symbol':'1.2-2' }}
+</p>
+
+<ul>
+  <li *ngFor="let item of listado | slice:-5; let indice=index; let fondo=odd;"
+    [style.background-color]="fondo ? 'LightBlue' : 'Lavender'">
+    {{item.nombre | titlecase}} ({{item.id}}) [Elemento {{indice + 1}} de {{listado.length}}]
+  </li>
+</ul>
+<p>
+  <select [(ngModel)]="idProvincia">
+    <option value="">--Elige opción--</option>
+    <option *ngFor="let p of listado" [value]="p.id">{{p.nombre | capitalize}}</option>
+  </select>
+  Selección: {{idProvincia}}
+  <input type="text" value="Tabarnia" #txtProvincia>
+  <input type="button" value="add" (click)="add(txtProvincia.value)">
+</p>
+<p>{{listado | json}}</p>
