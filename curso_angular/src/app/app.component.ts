@@ -6,11 +6,12 @@ import { NotificationComponent, NotificationModalComponent } from './main';
 import { DemosComponent } from './ejemplos/demos/demos.component';
 import { HomeComponent } from "./main/home/home.component";
 import { DashboardComponent } from "./ejemplos/dashboard/dashboard.component";
+import { CalculadoraComponent } from './calculadora/calculadora.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, SecurityModule, MyCoreModule, NotificationComponent, NotificationModalComponent, DemosComponent, HomeComponent, DashboardComponent],
+  imports: [RouterOutlet, SecurityModule, MyCoreModule, NotificationComponent, NotificationModalComponent, DemosComponent, HomeComponent, DashboardComponent,CalculadoraComponent,],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

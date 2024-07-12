@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+.calculadora{
+    background-color: rgb(112, 149, 235);
+    border: 5px solid yellow;
+    margin-left: auto; 
+    margin-right: auto;
+    padding: 15px;
+    width: 50%;
+    border-radius: 10px;
+}
+
+button{
+    font-family: 'Pacifico', cursive;
+    font-size: 25px;
+    height: 50px;
+    margin-right: 2px;
+    margin-bottom: 2px;
+    width: 24.6%;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+#display{
+    display: block;
+    background-color: rgb(248, 248, 12);
+    color: black;
+    font-family: 'Pacifico', cursive;
+    height: 35px;
+    width: 70%;
+    margin-bottom: 10px;
+    margin-right: auto;
+    margin-left: auto;
+    font-size: 35px;
+}
+
+.operacion{
+    background-color: rgb(5, 10, 138);
+    color: white;
+}
+
+.borrar{
+    background-color: rgb(201, 185, 66);
+    color: white;
+}
+
+.igual{
+    background-color: rgb(255, 225, 0);
+    width: 99.4%;
+}
+.unitario{
+    background-color: rgb(0, 255, 242);
+}
+input{
+    text-align: right;
+}

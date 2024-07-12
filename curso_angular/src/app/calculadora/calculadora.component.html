@@ -1,0 +1,31 @@
+<section class="calculadora">
+  <section class="elementos">
+    <input type="text" id="display" [value]="displayValue" readonly>
+    <button class="numero" (click)="procesaDigito('7')">7</button>
+    <button class="numero" (click)="procesaDigito('8')">8</button>
+    <button class="numero" (click)="procesaDigito('9')">9</button>
+    <button class="operacion" (click)="queOperacion('x')">x</button>
+
+    <button class="numero" (click)="procesaDigito('4')">4</button>
+    <button class="numero" (click)="procesaDigito('5')">5</button>
+    <button class="numero" (click)="procesaDigito('6')">6</button>
+    <button class="operacion" (click)="queOperacion('-')">-</button>
+
+    <button class="numero" (click)="procesaDigito('1')">1</button>
+    <button class="numero" (click)="procesaDigito('2')">2</button>
+    <button class="numero" (click)="procesaDigito('3')">3</button>
+    <button class="operacion" (click)="queOperacion('+')">+</button>
+
+    <button class="numero" (click)="procesaDigito('0')">0</button>
+    <button class="coma" (click)="comaDecimal()">,</button>
+    <button class="borrar" (click)="borrar()">C</button>
+    <button class="operacion" (click)="queOperacion('/')">/</button>
+
+    <button class="unitario" (click)="resolverUnitario('sin')">sin</button>
+    <button class="unitario" (click)="resolverUnitario('cos')">cos</button>
+    <button class="unitario" (click)="resolverUnitario('tan')">tan</button>
+    <button class="unitario" (click)="resolverUnitario('sqrt')">√</button>
+
+    <button class="igual" (click)="realizarOperacion()">=</button>
+  </section>
+</section>
