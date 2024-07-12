@@ -3,13 +3,14 @@ import { RouterOutlet } from '@angular/router';
 import { SecurityModule } from './security';
 import { LoggerService, MyCoreModule } from '@my/core';
 import { NotificationComponent, NotificationModalComponent } from './main';
-import { DemosComponent } from './demos/demos.component';
+import { DemosComponent } from './ejemplos/demos/demos.component';
 import { HomeComponent } from "./main/home/home.component";
+import { DashboardComponent } from "./ejemplos/dashboard/dashboard.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, SecurityModule, MyCoreModule, NotificationComponent, NotificationModalComponent, DemosComponent, HomeComponent],
+  imports: [RouterOutlet, SecurityModule, MyCoreModule, NotificationComponent, NotificationModalComponent, DemosComponent, HomeComponent, DashboardComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

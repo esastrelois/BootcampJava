@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NotificationService, NotificationType } from '../common-services/notification.service';
+import { NotificationService, NotificationType } from '../../common-services/notification.service';
 import { Unsubscribable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
