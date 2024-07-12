@@ -60,4 +60,5 @@
   * Redis
 * Front-end
   * Demo 1 - Operaciones y funciones básicas
-    
+* Curso_angular
+  * Desarrollo de angular básico
