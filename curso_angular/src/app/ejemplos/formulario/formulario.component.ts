@@ -2,6 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ErrorMessagePipe, NIFNIEValidator, TypeValidator, UppercaseValidator } from '@my/core';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { Observable } from 'rxjs';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { NotificationService, NotificationType } from 'src/app/common-services';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-formulario',

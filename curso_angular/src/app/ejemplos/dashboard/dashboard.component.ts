@@ -6,11 +6,12 @@ import { NotificationComponent } from "../../main/notification/notification.comp
 import { CommonModule } from '@angular/common';
 import { CalculadoraComponent } from 'src/app/calculadora/calculadora.component';
 import { FormularioComponent } from '../formulario/formulario.component';
+import { AjaxWaitComponent } from "../../main/ajax-wait";
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [DemosComponent, HomeComponent, GraficoSvgComponent,NotificationComponent, CommonModule,],
+  imports: [DemosComponent, HomeComponent, GraficoSvgComponent, NotificationComponent, CommonModule, AjaxWaitComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
