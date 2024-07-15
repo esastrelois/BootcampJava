@@ -6,9 +6,13 @@
 <form #miForm="ngForm">
     <div>
         <label for="id" class="form-label">Id: </label>
-        <input type="number" class="form-input" id="id" name="id" [(ngModel)]="elemento.id" #id="ngModel"
-        required min="0">
-        <output class="error" [hidden]="!id.hasError('required') || miForm.pristine">Es obligatorio</output>
+        @if(modo==='add') {
+            <input type="number" class="form-input" id="id" name="id" [(ngModel)]="elemento.id" #id="ngModel"
+            required min="0">
+            <output class="error" [hidden]="!id.hasError('required') || miForm.pristine">Es obligatorio</output>
+        } @else {
+            <output id="id" [textContent]="elemento.id"></output>
+        }
     </div>
     <div>
         <label for="nombre" class="form-label">Nombre: </label>
@@ -20,7 +24,7 @@
     <div>
         <label for="apellidos" class="form-label">Apellidos: </label>
         <input type="text" class="form-input" id="apellidos" name="apellidos" [(ngModel)]="elemento.apellidos" #apellidos="ngModel"
-        minlength="2" maxlength="20" pattern="^[A-Z]$">
+        minlength="2" maxlength="20" uppercase>
         <output class="error" [hidden]="!apellidos.hasError('minlength') && !apellidos.hasError('maxlength')">Debe tener entre 2 y 20 letras</output>
         <output class="error" [hidden]="!apellidos.valid">{{apellidos.errors | errormsg: 'Tiene que estar en mayúsculas'}}</output>
     </div>
@@ -33,7 +37,7 @@
     <div>
         <label for="nif" class="form-label">NIF: </label>
         <input type="nif" class="form-input" id="nif" name="nif" [(ngModel)]="elemento.nif" #nif="ngModel"
-        maxlength="100">
+        maxlength="100" nifnie>
         <output class="error" [hidden]="nif.valid">{{nif.errors | errormsg}} </output>
     </div>
     <div>
