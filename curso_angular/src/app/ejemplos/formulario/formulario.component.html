@@ -7,32 +7,46 @@
     <div>
         <label for="id" class="form-label">Id: </label>
         <input type="number" class="form-input" id="id" name="id" [(ngModel)]="elemento.id" #id="ngModel"
-        required>
+        required min="0">
+        <output class="error" [hidden]="!id.hasError('required') || miForm.pristine">Es obligatorio</output>
     </div>
     <div>
         <label for="nombre" class="form-label">Nombre: </label>
         <input type="text" class="form-input" id="nombre" name="nombre" [(ngModel)]="elemento.nombre" #nombre="ngModel"
         required minlength="2" maxlength="10">
+        <output class="error" [hidden]="!nombre.hasError('required')">Es obligatorio</output>
+        <output class="error" [hidden]="!nombre.hasError('minlength')">Debe tener entre 2 y 10 letras</output>
     </div>
     <div>
         <label for="apellidos" class="form-label">Apellidos: </label>
         <input type="text" class="form-input" id="apellidos" name="apellidos" [(ngModel)]="elemento.apellidos" #apellidos="ngModel"
-        minlength="2" maxlength="20">
+        minlength="2" maxlength="20" pattern="^[A-Z]$">
+        <output class="error" [hidden]="!apellidos.hasError('minlength') && !apellidos.hasError('maxlength')">Debe tener entre 2 y 20 letras</output>
+        <output class="error" [hidden]="!apellidos.valid">{{apellidos.errors | errormsg: 'Tiene que estar en mayúsculas'}}</output>
     </div>
     <div>
         <label for="correo" class="form-label">Correo: </label>
         <input type="email" class="form-input" id="correo" name="correo" [(ngModel)]="elemento.correo" #correo="ngModel"
+        maxlength="100" email>
+        <output class="error" [hidden]="correo.valid">{{correo.errors | errormsg}} </output>
+    </div>
+    <div>
+        <label for="nif" class="form-label">NIF: </label>
+        <input type="nif" class="form-input" id="nif" name="nif" [(ngModel)]="elemento.nif" #nif="ngModel"
         maxlength="100">
+        <output class="error" [hidden]="nif.valid">{{nif.errors | errormsg}} </output>
     </div>
     <div>
         <label for="edad" class="form-label">Edad: </label>
         <input type="number" class="form-input" id="edad" name="edad" [(ngModel)]="elemento.edad" #edad="ngModel"
         min="16" max="67">
+        <output class="error" [hidden]="edad.valid">{{edad.errors | errormsg}} </output>
     </div>
     <div>
         <label for="fecha" class="form-label">Fecha: </label>
         <input type="date" class="form-input" id="fecha" name="fecha" [(ngModel)]="elemento.fecha" #fecha="ngModel">
-    </div>
+        <output class="error" [hidden]="fecha.valid">{{fecha.errors | errormsg}} </output>
+    </div>  
     <div>
         <label for="conflictivo" class="form-label">Conflictivo: </label>
         <input type="checkbox" class="form-input" id="conflictivo" name="conflictivo" [(ngModel)]="elemento.conflictivo" #conflictivo="ngModel">

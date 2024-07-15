@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ErrorMessagePipe } from '@my/core';
 
 @Component({
   selector: 'app-formulario',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ErrorMessagePipe,],
   templateUrl: './formulario.component.html',
   styleUrl: './formulario.component.css'
 })
@@ -25,7 +26,7 @@ export class FormularioComponent {
   }
 
   cancel(){
-
+    //
   }
 
   send(){
