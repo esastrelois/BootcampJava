@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { CalculadoraComponent } from 'src/app/calculadora/calculadora.component';
 import { FormularioComponent } from '../formulario/formulario.component';
 import { AjaxWaitComponent } from "../../main/ajax-wait";
+import { ContactosComponent } from 'src/app/contactos/contactos.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,6 +18,7 @@ import { AjaxWaitComponent } from "../../main/ajax-wait";
 })
 export class DashboardComponent {
   menu = [
+    {texto: 'contactos', icono: '', componente: ContactosComponent}, //Contactos
     {texto: 'formulario', icono: '', componente: FormularioComponent}, //Demo
     {texto: 'calculadora', icono: '', componente: CalculadoraComponent}, //Calculadora
     {texto: 'inicio', icono: '', componente: HomeComponent}, //Home
