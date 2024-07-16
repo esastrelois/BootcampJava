@@ -8,11 +8,12 @@ import { CalculadoraComponent } from 'src/app/calculadora/calculadora.component'
 import { FormularioComponent } from '../formulario/formulario.component';
 import { AjaxWaitComponent } from "../../main/ajax-wait";
 import { ContactosComponent } from 'src/app/contactos/componente.component';
+import { LoginComponent } from 'src/app/security';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [DemosComponent, HomeComponent, GraficoSvgComponent, NotificationComponent, CommonModule, AjaxWaitComponent],
+  imports: [DemosComponent, HomeComponent, GraficoSvgComponent, NotificationComponent, CommonModule, AjaxWaitComponent, LoginComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
