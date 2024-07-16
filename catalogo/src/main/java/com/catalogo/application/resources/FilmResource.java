@@ -3,7 +3,6 @@ package com.catalogo.application.resources;
 import java.net.URI;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -15,14 +14,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.catalogo.application.proxies.MeGustaProxy;
 import com.catalogo.domains.contrats.services.FilmService;
 import com.catalogo.domains.entities.Film;
 import com.catalogo.domains.entities.models.FilmEditDTO;
@@ -37,7 +34,6 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -48,9 +44,6 @@ import jakarta.validation.Valid;
 public class FilmResource {
     private FilmService srv;
     
-    @Autowired
-	MeGustaProxy proxy;
-
     public FilmResource(FilmService srv) {
         this.srv = srv;
     }
@@ -181,15 +174,4 @@ public class FilmResource {
     		throw new NotFoundException();
         srv.deleteById(id);
     }
-    
-	@Operation(summary = "Enviar un me gusta")
-	@ApiResponse(responseCode = "200", description = "Like enviado")
-	@SecurityRequirement(name = "bearerAuth")
-	@PostMapping(path = "{id}/like")
-	public String like(@Parameter(description = "Identificador de la pelicula", required = true) @PathVariable int id,
-			@Parameter(hidden = true) @RequestHeader(required = false) String authorization) throws Exception {
-		if (authorization == null)
-			return proxy.sendLike(id);
-		return proxy.sendLike(id, authorization);
-	}
-}
+ }
