@@ -24,7 +24,6 @@ export interface IContacto {
 }
 
 export class Contacto implements IContacto {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [index: string]: any;
   constructor(
     public id: number = 0,
@@ -54,6 +53,7 @@ export class ContactosDAOService extends RESTDAOService<any, number> {
   constructor() {
     super('contactos', { context: new HttpContext().set(AUTH_REQUIRED, true) });
   }
+  // eslint-disable-next-line @typescript-eslint/array-type
   page(page: number, rows: number = 20): Observable<{ page: number, pages: number, rows: number, list: Array<any> }> {
     return new Observable(subscriber => {
       const url = `${this.baseUrl}?_page=${page}&_rows=${rows}&_sort=nombre,apellidos`
@@ -70,6 +70,7 @@ export class ContactosDAOService extends RESTDAOService<any, number> {
 })
 export class ContactosViewModelService {
   protected modo: ModoCRUD = 'list';
+  // eslint-disable-next-line @typescript-eslint/array-type
   protected listado: Array<IContacto> = [];
   protected elemento: IContacto = {};
   protected idOriginal?: number;
@@ -139,9 +140,9 @@ export class ContactosViewModelService {
   public cancel(): void {
     this.clear()
     // this.list();
-    this.load(this.page)
+    // this.load(this.page)
     // this.router.navigateByUrl(this.listURL);
-    // this.navigation.back()
+    this.navigation.back()
   }
   public send(): void {
     switch (this.modo) {
