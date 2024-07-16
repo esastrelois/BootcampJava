@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 import { CalculadoraComponent } from 'src/app/calculadora/calculadora.component';
 import { FormularioComponent } from '../formulario/formulario.component';
 import { AjaxWaitComponent } from "../../main/ajax-wait";
-import { ContactosComponent } from 'src/app/contactos/contactos.component';
+import { ContactosComponent } from 'src/app/contactos/componente.component';
 
 @Component({
   selector: 'app-dashboard',

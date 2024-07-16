@@ -1,8 +1,14 @@
-import { Component, forwardRef, OnDestroy, OnInit } from '@angular/core';
-import { ContactosViewModelService } from './ContactosViewModelService';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-empty-function */
+/* eslint-disable @angular-eslint/no-empty-lifecycle-method */
+import { Component, OnInit, OnDestroy, Input, OnChanges, SimpleChanges, forwardRef } from '@angular/core';
+import { ActivatedRoute, Router, ParamMap, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { DatePipe, } from '@angular/common';
+import { PaginatorModule } from 'primeng/paginator';
 import { ErrorMessagePipe, TypeValidator } from '@my/core';
-import { DatePipe } from '@angular/common';
+import { ContactosViewModelService } from './servicios.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-contactos',
@@ -10,82 +16,75 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./componente.component.css'],
   standalone: true,
   imports: [
-  forwardRef(() => ContactosAddComponent),
-  forwardRef(() => ContactosEditComponent),
-  forwardRef(() => ContactosViewComponent),
-  forwardRef(() => ContactosListComponent),
+    forwardRef(() => ContactosAddComponent),
+    forwardRef(() => ContactosEditComponent),
+    forwardRef(() => ContactosViewComponent),
+    forwardRef(() => ContactosListComponent),
   ],
 })
-
 export class ContactosComponent implements OnInit, OnDestroy {
-   constructor(protected vm: ContactosViewModelService) { }
-   public get VM(): ContactosViewModelService { return this.vm; }
-   ngOnInit(): void { this.vm.list(); }
+  constructor(protected vm: ContactosViewModelService) { }
+  public get VM(): ContactosViewModelService { return this.vm; }
+  ngOnInit(): void {
+    // this.vm.list();
+    this.vm.load()
+  }
   ngOnDestroy(): void { this.vm.clear(); }
 }
 
-  
+
 @Component({
   selector: 'app-contactos-list',
-  templateUrl: './tmpl-list.component.html',
+  templateUrl: './tmpl-list.sin-rutas.component.html',
   styleUrls: ['./componente.component.css'],
   standalone: true,
- })
- export class ContactosListComponent implements OnInit, OnDestroy {
+  imports: [PaginatorModule]
+})
+export class ContactosListComponent implements OnInit, OnDestroy {
   constructor(protected vm: ContactosViewModelService) { }
   public get VM(): ContactosViewModelService { return this.vm; }
-  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method, @typescript-eslint/no-empty-function
   ngOnInit(): void { }
-  ngOnDestroy(): void { this.vm.clear(); }
- }
- 
- @Component({
+  ngOnDestroy(): void { }
+}
+@Component({
   selector: 'app-contactos-add',
   templateUrl: './tmpl-form.component.html',
   styleUrls: ['./componente.component.css'],
   standalone: true,
   imports: [FormsModule, TypeValidator, ErrorMessagePipe]
- })
- export class ContactosAddComponent implements OnInit {
+})
+export class ContactosAddComponent implements OnInit {
   constructor(protected vm: ContactosViewModelService) { }
   public get VM(): ContactosViewModelService { return this.vm; }
-  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method, @typescript-eslint/no-empty-function
   ngOnInit(): void { }
- }
- @Component({
+}
+@Component({
   selector: 'app-contactos-edit',
   templateUrl: './tmpl-form.component.html',
   styleUrls: ['./componente.component.css'],
   standalone: true,
   imports: [FormsModule, TypeValidator, ErrorMessagePipe]
- })
- export class ContactosEditComponent implements OnInit, OnDestroy {
+})
+export class ContactosEditComponent implements OnInit, OnDestroy {
   constructor(protected vm: ContactosViewModelService) { }
   public get VM(): ContactosViewModelService { return this.vm; }
-  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method, @typescript-eslint/no-empty-function
   ngOnInit(): void { }
-  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method, @typescript-eslint/no-empty-function
   ngOnDestroy(): void { }
- }
- @Component({
+}
+@Component({
   selector: 'app-contactos-view',
-  templateUrl: './templ-view.component.html',
+  templateUrl: './tmpl-view.component.html',
   styleUrls: ['./componente.component.css'],
   standalone: true,
   imports: [DatePipe]
- })
- export class ContactosViewComponent implements OnInit, OnDestroy {
+})
+export class ContactosViewComponent implements OnInit, OnDestroy {
   constructor(protected vm: ContactosViewModelService) { }
   public get VM(): ContactosViewModelService { return this.vm; }
-  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method, @typescript-eslint/no-empty-function
   ngOnInit(): void { }
-  // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method, @typescript-eslint/no-empty-function
   ngOnDestroy(): void { }
- }
+}
 
- export const CONTACTOS_COMPONENTES = [
-  ContactosComponent, ContactosListComponent, ContactosAddComponent,
-  ContactosEditComponent, ContactosViewComponent,
- ];
- 
- 
+export const CONTACTOS_COMPONENTES = [
+  ContactosListComponent, ContactosAddComponent, ContactosEditComponent, ContactosViewComponent,
+];
