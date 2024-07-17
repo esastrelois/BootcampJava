@@ -6,6 +6,7 @@ export const routes: Routes = [
   { path: 'inicio', component: HomeComponent },
   { path: 'actores', loadChildren: () => import('./actores/modulo.module').then(mod => mod.ActoresModule) },
   { path: 'peliculas', loadChildren: () => import('./peliculas/modulo.module').then(mod => mod.PeliculasModule) },
+  { path: 'categorias', loadChildren: () => import('./categorias/modulo.module').then(mod => mod.CategoriasModule) },
   { path: '404.html', component: PageNotFoundComponent },
   { path: '**', component: PageNotFoundComponent },
 ];

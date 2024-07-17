@@ -14,39 +14,49 @@
       <output class="d-block" [textContent]="VM.Elemento.id"></output>
     </div>
   }
-  <div class="form-floating col-md-2">
-    <select class="form-control form-select" name="tratamiento" id="tratamiento"
-       [(ngModel)]="VM.Elemento.tratamiento" #tratamiento="ngModel">
-      <option>Sr.</option>
-      <option>Sra.</option>
-      <option>Srta.</option>
-      <option>Dr.</option>
-      <option>Dra.</option>
-      <option>Ilmo.</option>
-      <option>Ilma.</option>
-      <option>Excmo.</option>
-      <option>Excma.</option>
-    </select>
-    <label for="tratamiento">Tratamiento:</label>
-  </div>
   <div class="form-floating col-md-4">
     <input class="form-control" [class.is-invalid]="title.invalid" type="text" name="title" id="title"
-       [(ngModel)]="VM.Elemento.title" #title="ngModel" required minlength="2"
-       maxlength="50" placeholder=" ">
+       [(ngModel)]="VM.Elemento.title" #title="ngModel" required minlength="2" maxlength="128" placeholder=" ">
     <label for="title">Titulo:</label>
     <output class="invalid-feedback" [hidden]="title.valid">{{title.errors | errormsg}}</output>
   </div>
-  <div class="form-floating col-md-3 col-lg-2">
-    <input class="form-control" [class.is-invalid]="description.invalid" type="tel" name="description" id="description"
-       [(ngModel)]="VM.Elemento.description" #description="ngModel" pattern="^(\d{3}\s){2}\d{3}$" placeholder=" ">
-    <label class="form-label" for="description">Descripción:</label>
-    <output class="invalid-feedback" [hidden]="description.valid">{{description.errors | errormsg:"El formato debe ser: 555 999 999"}}</output>
+  <div class="form-floating col-md-4">
+    <select class="form-control" [class.is-invalid]="language.invalid" name="language" id="language" [(ngModel)]="VM.Elemento.language"
+       #language="ngModel" required>
+      <option *ngFor="let lang of VM.languages" [ngValue]="lang">{{lang.name}}</option>
+    </select>
+    <label for="language">Idioma:</label>
+    <output class="invalid-feedback" [hidden]="language.valid">{{language.errors | errormsg}}</output>
   </div>
-  <div class="form-floating  col-md-6 col-lg-4">
-    <input class="form-control" [class.is-invalid]="release_year.invalid" type="release_year" name="release_year" id="release_year" [(ngModel)]="VM.Elemento.release_year"
-       #release_year="ngModel" release_year maxlength="100" placeholder=" ">
+  <div class="form-floating col-md-3 col-lg-2">
+    <input class="form-control" [class.is-invalid]="description.invalid" type="text" name="description" id="description"
+       [(ngModel)]="VM.Elemento.description" #description="ngModel" placeholder=" ">
+    <label class="form-label" for="description">Descripción:</label>
+    <output class="invalid-feedback" [hidden]="description.valid">{{description.errors | errormsg}}</output>
+  </div>
+  <div class="form-floating col-md-3 col-lg-2">
+    <input class="form-control" [class.is-invalid]="release_year.invalid" type="number" name="release_year" id="release_year" [(ngModel)]="VM.Elemento.release_year"
+       #release_year="ngModel" min="1901" max="2155" placeholder=" ">
     <label class="form-label" for="release_year">Año de realización:</label>
     <output class="invalid-feedback" [hidden]="release_year.valid">{{release_year.errors | errormsg}}</output>
+  </div>
+  <div class="form-floating col-md-2">
+    <input class="form-control" [class.is-invalid]="rental_duration.invalid" type="number" name="rental_duration" id="rental_duration" [(ngModel)]="VM.Elemento.rental_duration"
+       #rental_duration="ngModel" required min="1" placeholder=" ">
+    <label for="rental_duration">Duración de alquiler:</label>
+    <output class="invalid-feedback" [hidden]="rental_duration.valid">{{rental_duration.errors | errormsg}}</output>
+  </div>
+  <div class="form-floating col-md-2">
+    <input class="form-control" [class.is-invalid]="rental_rate.invalid" type="number" name="rental_rate" id="rental_rate" [(ngModel)]="VM.Elemento.rental_rate"
+       #rental_rate="ngModel" required min="0.01" step="0.01" placeholder=" ">
+    <label for="rental_rate">Tarifa de alquiler:</label>
+    <output class="invalid-feedback" [hidden]="rental_rate.valid">{{rental_rate.errors | errormsg}}</output>
+  </div>
+  <div class="form-floating col-md-2">
+    <input class="form-control" [class.is-invalid]="replacement_cost.invalid" type="number" name="replacement_cost" id="replacement_cost" [(ngModel)]="VM.Elemento.replacement_cost"
+       #replacement_cost="ngModel" required min="0.01" step="0.01" placeholder=" ">
+    <label for="replacement_cost">Costo de reemplazo:</label>
+    <output class="invalid-feedback" [hidden]="replacement_cost.valid">{{replacement_cost.errors | errormsg}}</output>
   </div>
   <div class="mt-2">
     <input type="button" class="btn btn-success" value="Enviar" (click)="VM.send()"

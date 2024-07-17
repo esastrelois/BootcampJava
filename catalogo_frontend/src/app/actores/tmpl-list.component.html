@@ -3,9 +3,7 @@
     <tr class="table-info">
       <th class="display-4">Lista de actores</th>
       <th class="text-end">
-        @if (VM.auth.isAuthenticated) {
         <button class="btn btn-success" routerLink="add"><i class="fas fa-plus"></i> Añadir</button>
-        }
       </th>
     </tr>
   </thead>
@@ -29,12 +27,10 @@
           </div>
         </td>
         <td class="align-middle text-end">
-          @if (VM.auth.isAuthenticated) {
           <div class="btn-group" role="group">
             <button class="btn btn-success" [routerLink]="[item.id, 'edit']"><i class="fas fa-pen"></i></button>
             <button class="btn btn-danger" (click)="VM.delete(item.id)"><i class="far fa-trash-alt"></i></button>
           </div>
-          }
       </td>
       </tr>
   }

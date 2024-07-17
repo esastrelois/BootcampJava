@@ -4,13 +4,13 @@ import { AjaxWaitComponent, HeaderComponent, NotificationComponent, Notification
 import { NavigationService } from './common-services';
 import { ActoresListComponent } from "./actores/componente.component";
 import { PeliculasListComponent } from './peliculas/componente.component';
-
+import { CategoriasListComponent } from './categorias/componente.component';
 import { Header } from 'primeng/api';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NotificationComponent, NotificationModalComponent, AjaxWaitComponent, ActoresListComponent, HeaderComponent, PeliculasListComponent],
+  imports: [RouterOutlet, NotificationComponent, NotificationModalComponent, AjaxWaitComponent, ActoresListComponent, HeaderComponent, PeliculasListComponent,  CategoriasListComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

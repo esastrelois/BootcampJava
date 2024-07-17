@@ -4,10 +4,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { InRoleCanActivate } from '../security';
 
 export const routes: Routes = [
-  { path: 'v1', component: PeliculasListComponent },
-  { path: 'v1', component: PeliculasAddComponent/*, canActivate: [ InRoleCanActivate('Empleados')]*/ },
-  { path: 'v1/:id', component: PeliculasEditComponent/*, canActivate: [ InRoleCanActivate('Empleados')]*/ },
-  { path: 'v1/:id', component: PeliculasViewComponent/*, canActivate: [ InRoleCanActivate('Empleados')]*/ }
+  { path: '', component: PeliculasListComponent },
+  { path: 'add', component: PeliculasAddComponent/*, canActivate: [ InRoleCanActivate('Empleados')]*/ },
+  { path: ':id/edit', component: PeliculasEditComponent/*, canActivate: [ InRoleCanActivate('Empleados')]*/ },
+  { path: ':id/:**', component: PeliculasViewComponent/*, canActivate: [ InRoleCanActivate('Empleados')]*/ }
 ];
 
 @NgModule({
