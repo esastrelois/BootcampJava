@@ -8,17 +8,16 @@ import { RESTDAOService, ModoCRUD } from '../code-base';
 import { NavigationService, NotificationService } from '../common-services';
 import { AuthService, AUTH_REQUIRED } from '../security';
 
-
 @Injectable({
   providedIn: 'root'
 })
-export class ActoresDAOService extends RESTDAOService<any, number> {
+export class PeliculasDAOService extends RESTDAOService<any, number> {
   constructor() {
-    super('actores/v1', { context: new HttpContext().set(AUTH_REQUIRED, true) });
+    super('peliculas/v1', { context: new HttpContext().set(AUTH_REQUIRED, true) });
   }
-  page(page: number, rows: number = 20): Observable<{ page: number, pages: number, rows: number, list: any[] }> {
+  page(page: number, rows: number = 20): Observable<{ page: number, pages: number, rows: number, list: Array<any> }> {
     return new Observable(subscriber => {
-      const url = `${this.baseUrl}?page=${page}&size=${rows}&sort=firstName&sort=lastName`
+      const url = `${this.baseUrl}?page=${page}&size=${rows}&sort=title`
       this.http.get<any>(url, this.option).subscribe({
         next: data => subscriber.next({ page: data.number, pages: data.totalPages, rows: data.totalElements, list: data.content }),
         error: err => subscriber.error(err)
@@ -30,15 +29,16 @@ export class ActoresDAOService extends RESTDAOService<any, number> {
 @Injectable({
   providedIn: 'root'
 })
-export class ActoresViewModelService {
+export class PeliculasViewModelService {
   protected modo: ModoCRUD = 'list';
-  protected listado: any[] = [];
+  protected listado: Array<any> = [];
   protected elemento: any = {};
   protected idOriginal?: number;
+  protected listURL = '/peliculas';
 
   constructor(protected notify: NotificationService,
     protected out: LoggerService,
-    protected dao: ActoresDAOService
+    protected dao: PeliculasDAOService
     , public auth: AuthService, protected router: Router, private navigation: NavigationService
   ) { }
 

@@ -3,6 +3,7 @@ package com.catalogo.application.resources;
 import java.net.URI;
 import java.util.List;
 
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -65,7 +66,7 @@ public class FilmResource {
     @ApiResponse(responseCode = "200", description = "OK")
     @GetMapping(params = "page")
     @ResponseStatus(HttpStatus.OK)
-    public Page<FilmShortDTO> getAll(Pageable page) {
+    public Page<FilmShortDTO> getAll(@ParameterObject Pageable page) {
         return srv.getByProjection(page, FilmShortDTO.class);
     }
 
