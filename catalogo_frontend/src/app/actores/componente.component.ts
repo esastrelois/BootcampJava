@@ -98,3 +98,4 @@ export class ActoresViewComponent implements OnChanges {
 export const ACTORES_COMPONENTES = [
   ActoresListComponent, ActoresAddComponent, ActoresEditComponent, ActoresViewComponent,
 ];
+

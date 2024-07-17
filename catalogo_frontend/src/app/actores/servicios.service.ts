@@ -8,55 +8,16 @@ import { RESTDAOService, ModoCRUD } from '../code-base';
 import { NavigationService, NotificationService } from '../common-services';
 import { AuthService, AUTH_REQUIRED } from '../security';
 
-export interface IActor {
-  [index: string]: any;
-  id?: number
-  tratamiento?: string
-  nombre?: string
-  apellidos?: string
-  telefono?: string
-  email?: string
-  sexo?: string
-  nacimiento?: string
-  avatar?: string
-  conflictivo?: boolean
-  icono?: string
-}
-
-export class Actor implements IActor {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [index: string]: any;
-  constructor(
-    public id: number = 0,
-    private _tratamiento?: string,
-    public nombre?: string,
-    public apellidos?: string,
-    public telefono?: string,
-    public email?: string,
-    public sexo: string = 'H',
-    public nacimiento?: string,
-    public avatar?: string,
-    public conflictivo: boolean = false,
-  ) { }
-  get tratamiento() { return this._tratamiento }
-  set tratamiento(value: string | undefined) {
-    if(this._tratamiento === value) return
-    this._tratamiento = value
-    if(!this._tratamiento) return
-    this.sexo = this._tratamiento.endsWith('a.') ? 'M' : 'H'
-  }
-}
-
 @Injectable({
   providedIn: 'root'
 })
 export class ActoresDAOService extends RESTDAOService<any, number> {
   constructor() {
-    super('actores', { context: new HttpContext().set(AUTH_REQUIRED, true) });
+    super('actores/v1', { context: new HttpContext().set(AUTH_REQUIRED, true) });
   }
   page(page: number, rows: number = 20): Observable<{ page: number, pages: number, rows: number, list: Array<any> }> {
     return new Observable(subscriber => {
-      const url = `${this.baseUrl}?_page=${page}&_rows=${rows}&_sort=nombre,apellidos`
+      const url = `${this.baseUrl}?page=${page}&size=${rows}&sort=lastName`
       this.http.get<any>(url, this.option).subscribe({
         next: data => subscriber.next({ page: data.number, pages: data.totalPages, rows: data.totalElements, list: data.content }),
         error: err => subscriber.error(err)
@@ -70,8 +31,8 @@ export class ActoresDAOService extends RESTDAOService<any, number> {
 })
 export class ActoresViewModelService {
   protected modo: ModoCRUD = 'list';
-  protected listado: Array<IActor> = [];
-  protected elemento: IActor = {};
+  protected listado: Array<any> = [];
+  protected elemento: any = {};
   protected idOriginal?: number;
   protected listURL = '/actores';
 
@@ -96,7 +57,7 @@ export class ActoresViewModelService {
   }
 
   public add(): void {
-    this.elemento = new Actor();
+    this.elemento = {};
     this.modo = 'add';
   }
   public edit(key: any): void {

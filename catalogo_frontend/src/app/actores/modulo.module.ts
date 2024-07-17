@@ -1,24 +1,18 @@
 import { NgModule } from '@angular/core';
+import { ACTORES_COMPONENTES, ActoresAddComponent, ActoresEditComponent, ActoresListComponent, ActoresViewComponent } from './componente.component';
 import { RouterModule, Routes } from '@angular/router';
 import { InRoleCanActivate } from '../security';
-import { ActoresListComponent, ActoresAddComponent, ActoresEditComponent, ActoresViewComponent } from './componente.component';
 
 export const routes: Routes = [
-  { path: '', component: ActoresListComponent },
-  { path: 'actores/v1', component: ActoresAddComponent, canActivate: [ InRoleCanActivate('Actores')] },
-  { path: 'actores/v1/:id', component: ActoresEditComponent, canActivate: [ InRoleCanActivate('Actores')] },
-  { path: 'actores/v1/:id', component: ActoresViewComponent, canActivate: [ InRoleCanActivate('Actores')] }
+  { path: 'v1', component: ActoresListComponent },
+  { path: 'v1', component: ActoresAddComponent/*, canActivate: [ InRoleCanActivate('Empleados')]*/ },
+  { path: 'v1/:id', component: ActoresEditComponent/*, canActivate: [ InRoleCanActivate('Empleados')]*/ },
+  { path: 'v1/:id', component: ActoresViewComponent/*, canActivate: [ InRoleCanActivate('Empleados')]*/ }
 ];
 
 @NgModule({
   declarations: [],
-  imports: [
-    RouterModule.forChild(routes),
-    ActoresListComponent,
-    ActoresAddComponent,
-    ActoresEditComponent,
-    ActoresViewComponent
-  ],
+  imports: [ ACTORES_COMPONENTES, RouterModule.forChild(routes) ],
   exports: [ RouterModule ]
 })
 export class ActoresModule { }

@@ -13,7 +13,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withComponentInputBinding()),
     LoggerService,
-    {provide: ERROR_LEVEL, useValue: environment.ERROR_LEVEL},
+    { provide: ERROR_LEVEL, useValue: environment.ERROR_LEVEL },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true, },
     provideHttpClient(withInterceptorsFromDi(), withInterceptors([ ajaxWaitInterceptor ])),
 ]
